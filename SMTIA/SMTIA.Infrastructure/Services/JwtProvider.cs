@@ -17,6 +17,8 @@ namespace SMTIA.Infrastructure.Services
     {
         public async Task<LoginCommandResponse> CreateToken(AppUser user)
         {
+            var roles = await userManager.GetRolesAsync(user);
+            
             List<Claim> claims = new()
             {
                 new Claim("Id", user.Id.ToString()),
@@ -24,6 +26,11 @@ namespace SMTIA.Infrastructure.Services
                 new Claim("Email", user.Email ?? ""),
                 new Claim("UserName", user.UserName ?? "")
             };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             DateTime expires = DateTime.UtcNow.AddMonths(1);
 

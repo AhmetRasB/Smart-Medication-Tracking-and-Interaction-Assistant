@@ -19,7 +19,7 @@ namespace SMTIA.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+                options.UseNpgsql(configuration.GetConnectionString("PosgreSql"));
             });
 
             services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());

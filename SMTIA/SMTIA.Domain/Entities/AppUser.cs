@@ -7,6 +7,8 @@ namespace SMTIA.Domain.Entities
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string FullName => string.Join(" ", FirstName, LastName);
+        public DateTime? DateOfBirth { get; set; }
+        public decimal? Weight { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpires { get; set; }
     }
