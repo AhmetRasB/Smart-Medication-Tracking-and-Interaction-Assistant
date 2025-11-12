@@ -12,6 +12,15 @@ namespace SMTIA.Infrastructure.Context
         {
         }
 
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<SideEffect> SideEffects { get; set; }
+        public DbSet<MedicineSideEffect> MedicineSideEffects { get; set; }
+        public DbSet<UserPrescription> UserPrescriptions { get; set; }
+        public DbSet<PrescriptionMedicine> PrescriptionMedicines { get; set; }
+        public DbSet<MedicationSchedule> MedicationSchedules { get; set; }
+        public DbSet<ScheduleTiming> ScheduleTimings { get; set; }
+        public DbSet<IntakeLog> IntakeLogs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

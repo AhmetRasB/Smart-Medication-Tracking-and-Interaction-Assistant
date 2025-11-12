@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SMTIA.Infrastructure.Context;
@@ -11,9 +12,11 @@ using SMTIA.Infrastructure.Context;
 namespace SMTIA.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251108184105_InitialSchema")]
+    partial class InitialSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -441,8 +444,7 @@ namespace SMTIA.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("DayOfWeek")
-                        .HasColumnType("integer")
-                        .HasComment("0=Pazar, 1=Pazartesi, ..., 6=Cumartesi (null = her gün)");
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Dosage")
                         .HasColumnType("decimal(18,2)");
@@ -465,7 +467,7 @@ namespace SMTIA.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicationScheduleId", "Time");
+                    b.HasIndex("MedicationScheduleId");
 
                     b.ToTable("ScheduleTimings", (string)null);
                 });
