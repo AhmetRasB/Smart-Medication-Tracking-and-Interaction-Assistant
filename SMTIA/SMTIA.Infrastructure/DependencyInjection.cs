@@ -7,9 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Scrutor;
+using SMTIA.Application.Abstractions;
+using SMTIA.Domain.Abstractions;
 using SMTIA.Domain.Entities;
 using SMTIA.Infrastructure.Context;
 using SMTIA.Infrastructure.Options;
+using SMTIA.Infrastructure.Repositories;
 
 namespace SMTIA.Infrastructure
 {
@@ -22,7 +25,14 @@ namespace SMTIA.Infrastructure
                 options.UseNpgsql(configuration.GetConnectionString("PosgreSql"));
             });
 
-            services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped<GenericRepository.IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped<Application.Abstractions.IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
+            
+            // Register repositories for each entity
+            services.AddScoped(typeof(Application.Abstractions.IRepository<>), typeof(EfRepository<>));
+
+            // Register email service
+            services.AddScoped<Application.Services.IEmailService, Services.EmailService>();
 
             services
                 .AddIdentity<AppUser, IdentityRole<Guid>>(cfr =>

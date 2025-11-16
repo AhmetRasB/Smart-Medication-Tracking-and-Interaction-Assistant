@@ -9,7 +9,12 @@ namespace SMTIA.Domain.Entities
         public string FullName => string.Join(" ", FirstName, LastName);
         public DateTime? DateOfBirth { get; set; }
         public decimal? Weight { get; set; }
+        public string? BloodType { get; set; } // A+, A-, B+, B-, AB+, AB-, O+, O-
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpires { get; set; }
+
+        // Navigation properties
+        public ICollection<UserAllergy> UserAllergies { get; set; } = new List<UserAllergy>();
+        public ICollection<UserDisease> UserDiseases { get; set; } = new List<UserDisease>();
     }
 }

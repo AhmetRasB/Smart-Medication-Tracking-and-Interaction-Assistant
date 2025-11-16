@@ -48,6 +48,12 @@ namespace SMTIA.Infrastructure.Configurations
 
             builder.Property(up => up.UpdatedAt);
 
+            builder.Property(up => up.IsDeleted)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.Property(up => up.DeletedAt);
+
             // Relationships
             builder.HasOne(up => up.User)
                 .WithMany()

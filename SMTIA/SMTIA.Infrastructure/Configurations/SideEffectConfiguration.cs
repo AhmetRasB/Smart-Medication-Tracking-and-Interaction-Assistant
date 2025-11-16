@@ -28,6 +28,12 @@ namespace SMTIA.Infrastructure.Configurations
             builder.Property(se => se.CreatedAt)
                 .IsRequired();
 
+            builder.Property(se => se.IsDeleted)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.Property(se => se.DeletedAt);
+
             // Relationships
             builder.HasMany(se => se.MedicineSideEffects)
                 .WithOne(mse => mse.SideEffect)

@@ -37,6 +37,12 @@ namespace SMTIA.Infrastructure.Configurations
             builder.Property(pm => pm.CreatedAt)
                 .IsRequired();
 
+            builder.Property(pm => pm.IsDeleted)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.Property(pm => pm.DeletedAt);
+
             // Relationships
             builder.HasOne(pm => pm.Prescription)
                 .WithMany(up => up.PrescriptionMedicines)

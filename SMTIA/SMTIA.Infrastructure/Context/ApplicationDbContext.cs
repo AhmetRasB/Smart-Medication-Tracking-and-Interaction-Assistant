@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SMTIA.Application.Abstractions;
 using SMTIA.Domain.Entities;
 
 namespace SMTIA.Infrastructure.Context
 {
-    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IUnitOfWork
+    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, GenericRepository.IUnitOfWork, Application.Abstractions.IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -20,6 +21,8 @@ namespace SMTIA.Infrastructure.Context
         public DbSet<MedicationSchedule> MedicationSchedules { get; set; }
         public DbSet<ScheduleTiming> ScheduleTimings { get; set; }
         public DbSet<IntakeLog> IntakeLogs { get; set; }
+        public DbSet<UserAllergy> UserAllergies { get; set; }
+        public DbSet<UserDisease> UserDiseases { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

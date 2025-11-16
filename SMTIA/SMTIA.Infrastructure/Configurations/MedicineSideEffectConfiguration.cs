@@ -22,6 +22,12 @@ namespace SMTIA.Infrastructure.Configurations
                 .HasMaxLength(50)
                 .HasColumnType("varchar(50)");
 
+            builder.Property(mse => mse.IsDeleted)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.Property(mse => mse.DeletedAt);
+
             // Relationships
             builder.HasOne(mse => mse.Medicine)
                 .WithMany(m => m.MedicineSideEffects)
