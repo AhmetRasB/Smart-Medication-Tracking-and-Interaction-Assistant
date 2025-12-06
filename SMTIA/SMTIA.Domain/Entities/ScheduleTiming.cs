@@ -9,6 +9,10 @@ namespace SMTIA.Domain.Entities
         public decimal Dosage { get; set; } 
         public string DosageUnit { get; set; } = string.Empty;
         public int? DayOfWeek { get; set; } 
+        /// <summary>
+        /// Interval tipi için saat aralığı (örn: 12 = her 12 saatte bir)
+        /// </summary>
+        public int? IntervalHours { get; set; }
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

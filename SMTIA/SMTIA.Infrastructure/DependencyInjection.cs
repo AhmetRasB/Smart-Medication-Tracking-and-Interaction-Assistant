@@ -34,6 +34,12 @@ namespace SMTIA.Infrastructure
             // Register email service
             services.AddScoped<Application.Services.IEmailService, Services.EmailService>();
 
+            // Register FDA service
+            services.AddHttpClient<Application.Services.IFdaService, Services.FdaService>();
+
+            // Register Audit Log service
+            services.AddScoped<Application.Services.IAuditLogService, Services.AuditLogService>();
+
             services
                 .AddIdentity<AppUser, IdentityRole<Guid>>(cfr =>
                 {

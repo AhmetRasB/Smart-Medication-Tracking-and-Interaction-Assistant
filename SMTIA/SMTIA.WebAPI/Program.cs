@@ -8,11 +8,21 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using SMTIA.Application;
 using SMTIA.Infrastructure;
 using SMTIA.WebAPI.Middlewares;
 
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/smtia-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Use Serilog
+builder.Host.UseSerilog();
 
 builder.Services.AddResponseCompression(options =>
 {
@@ -33,6 +43,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers().AddOData(action =>
 {
@@ -97,6 +109,9 @@ app.UseAuthorization();
 app.UseRateLimiter();
 
 app.UseExceptionHandler();
+
+// Add Audit Log Middleware
+app.UseMiddleware<AuditLogMiddleware>();
 
 // Map confirm-email endpoint without authorization (for email confirmation links)
 app.MapGet("/api/auth/confirm-email", async (

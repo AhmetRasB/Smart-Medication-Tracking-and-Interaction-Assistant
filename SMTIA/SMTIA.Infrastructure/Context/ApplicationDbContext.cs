@@ -23,6 +23,7 @@ namespace SMTIA.Infrastructure.Context
         public DbSet<IntakeLog> IntakeLogs { get; set; }
         public DbSet<UserAllergy> UserAllergies { get; set; }
         public DbSet<UserDisease> UserDiseases { get; set; }
+        public DbSet<AuditLog> AuditLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

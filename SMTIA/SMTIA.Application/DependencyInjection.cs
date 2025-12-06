@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using SMTIA.Application.Behaviors;
+using SMTIA.Application.Services;
 
 namespace SMTIA.Application
 {
@@ -17,6 +18,9 @@ namespace SMTIA.Application
             });
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
+            // Register schedule timing service
+            services.AddScoped<IScheduleTimingService, ScheduleTimingService>();
 
             return services;
         }

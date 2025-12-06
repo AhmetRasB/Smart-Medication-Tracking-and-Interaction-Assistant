@@ -33,6 +33,9 @@ namespace SMTIA.Infrastructure.Configurations
             builder.Property(st => st.DayOfWeek)
                 .HasComment("0=Pazar, 1=Pazartesi, ..., 6=Cumartesi (null = her gün)");
 
+            builder.Property(st => st.IntervalHours)
+                .HasComment("Interval tipi için saat aralığı (örn: 12 = her 12 saatte bir)");
+
             builder.Property(st => st.IsActive)
                 .IsRequired()
                 .HasDefaultValue(true);
