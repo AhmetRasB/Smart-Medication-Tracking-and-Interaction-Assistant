@@ -1,4 +1,5 @@
 using FluentValidation;
+using SMTIA.Application.Services;
 
 namespace SMTIA.Application.Features.Schedules.Create
 {

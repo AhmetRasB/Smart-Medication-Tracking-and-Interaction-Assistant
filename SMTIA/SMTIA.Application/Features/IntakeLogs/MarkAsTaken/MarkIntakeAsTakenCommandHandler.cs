@@ -7,8 +7,6 @@ namespace SMTIA.Application.Features.IntakeLogs.MarkAsTaken
 {
     internal sealed class MarkIntakeAsTakenCommandHandler(
         IRepository<IntakeLog> intakeLogRepository,
-        IRepository<MedicationSchedule> scheduleRepository,
-        IRepository<UserPrescription> prescriptionRepository,
         IUnitOfWork unitOfWork) : IRequestHandler<MarkIntakeAsTakenCommand, Result<MarkIntakeAsTakenCommandResponse>>
     {
         public async Task<Result<MarkIntakeAsTakenCommandResponse>> Handle(MarkIntakeAsTakenCommand request, CancellationToken cancellationToken)
