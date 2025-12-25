@@ -152,6 +152,8 @@ namespace SMTIA.WebAPI.Controllers
                     if (user is null) return NotFound(new { message = "User not found" });
 
                     // 1. Update Scalar Fields
+                    _logger.LogInformation("Step 1: Updating Scalar Fields. User ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+                    
                     user.TcIdentityNo = request.TcIdentityNo;
                     user.BloodType = request.BloodType;
                     user.Smokes = request.Smokes;
@@ -165,30 +167,58 @@ namespace SMTIA.WebAPI.Controllers
 
                     _logger.LogInformation("Saving scalar updates...");
                     await dbContext.SaveChangesAsync(cancellationToken);
+                    _logger.LogInformation("Step 1 Complete. New ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+
+                    // RELOAD USER to ensure fresh state and stamp
+                    dbContext.ChangeTracker.Clear();
+                    user = await dbContext.Users
+                        .Include(u => u.EmergencyContacts)
+                        .Include(u => u.UserSurgeries)
+                        .Include(u => u.UserDiseases)
+                        .FirstOrDefaultAsync(u => u.Id == userGuid, cancellationToken);
+                    
+                    if (user == null) throw new Exception("User disappeared during update");
 
                     // 2. Clear Collections
-                    _logger.LogInformation("Clearing collections...");
+                    _logger.LogInformation("Step 2: Clearing Collections. User ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+                    
                     user.EmergencyContacts.Clear();
                     user.UserSurgeries.Clear();
                     user.UserDiseases.Clear();
                     
                     _logger.LogInformation("Saving collection clearance...");
                     await dbContext.SaveChangesAsync(cancellationToken);
+                    _logger.LogInformation("Step 2 Complete. New ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+
+                    // RELOAD USER AGAIN
+                    dbContext.ChangeTracker.Clear();
+                    user = await dbContext.Users
+                        .Include(u => u.EmergencyContacts)
+                        .Include(u => u.UserSurgeries)
+                        .Include(u => u.UserDiseases)
+                        .FirstOrDefaultAsync(u => u.Id == userGuid, cancellationToken);
+
+                    if (user == null) throw new Exception("User disappeared during update");
 
                     // 3. Add New Items
+                    _logger.LogInformation("Step 3: Adding New Items. User ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+                    
                     if (request.EmergencyContacts != null && request.EmergencyContacts.Any())
                     {
                         _logger.LogInformation("Adding {Count} EmergencyContacts...", request.EmergencyContacts.Count);
                         foreach (var contact in request.EmergencyContacts)
                         {
-                            user.EmergencyContacts.Add(new UserEmergencyContact
+                            var newContact = new UserEmergencyContact
                             {
                                 Id = Guid.NewGuid(),
                                 Name = contact.Name,
                                 Phone = contact.Phone,
                                 Relationship = contact.Relationship,
                                 UserId = userGuid
-                            });
+                            };
+                            user.EmergencyContacts.Add(newContact);
+                            // Explicitly add to context to ensure tracking
+                            // dbContext.UserEmergencyContacts.Add(newContact); 
                         }
                     }
 
@@ -222,14 +252,26 @@ namespace SMTIA.WebAPI.Controllers
 
                     _logger.LogInformation("Saving new collection items...");
                     await dbContext.SaveChangesAsync(cancellationToken);
+                    _logger.LogInformation("Step 3 Complete. Final ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
                     
                     return Ok(new { message = "Health info updated successfully" });
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
+                    _logger.LogError("CONCURRENCY EXCEPTION CAUGHT!");
                     foreach (var entry in ex.Entries)
                     {
-                        _logger.LogError("Concurrency conflict for entity: {EntityName}, State: {State}", entry.Entity.GetType().Name, entry.State);
+                        var entityName = entry.Entity.GetType().Name;
+                        var state = entry.State;
+                        var dbValues = await entry.GetDatabaseValuesAsync(cancellationToken);
+                        _logger.LogError("Conflict Entity: {EntityName}, State: {State}", entityName, state);
+                        
+                        if (entry.Entity is AppUser appUser)
+                        {
+                             var clientStamp = appUser.ConcurrencyStamp;
+                             var dbStamp = dbValues?.GetValue<string>("ConcurrencyStamp");
+                             _logger.LogError("AppUser Conflict: ClientStamp={ClientStamp}, DbStamp={DbStamp}", clientStamp, dbStamp);
+                        }
                     }
 
                     if (i == maxRetries - 1)
@@ -240,6 +282,11 @@ namespace SMTIA.WebAPI.Controllers
                     // Clear change tracker to avoid stale entries in next iteration
                     dbContext.ChangeTracker.Clear();
                     _logger.LogWarning("UpdateHealth concurrency exception, retrying... Attempt {Attempt}", i + 1);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Unexpected error in UpdateHealth");
+                    throw;
                 }
             }
 
