@@ -1,0 +1,158 @@
+.mod-panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 9999;
+}
+
+.mod-panel {
+  width: min(1100px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.2);
+  padding: 18px;
+}
+
+.mod-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.mod-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.mod-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.mod-close {
+  border: none;
+  background: #f3f4f6;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.mod-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .mod-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mod-card {
+  border: 1px solid #eef2f7;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.mod-card h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.mod-form input,
+.mod-form textarea,
+.mod-search {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.mod-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.mod-form input:focus,
+.mod-form textarea:focus,
+.mod-search:focus {
+  border-color: #a8c8a0;
+  box-shadow: 0 0 0 3px rgba(168,200,160,0.15);
+}
+
+.mod-primary {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #a8c8a0 0%, #8db87d 100%);
+  color: white;
+  font-weight: 600;
+}
+
+.mod-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.mod-state {
+  padding: 10px 2px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.mod-error {
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff1f2;
+  color: #b91c1c;
+  margin-top: 10px;
+}
+
+.mod-list {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.mod-item {
+  border: 1px solid #eef2f7;
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.mod-item-sub {
+  color: #6b7280;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.mod-danger {
+  border: 1px solid rgba(212,165,165,0.5);
+  background: rgba(212,165,165,0.15);
+  color: #991b1b;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+

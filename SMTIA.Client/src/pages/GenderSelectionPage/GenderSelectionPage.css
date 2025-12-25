@@ -1,0 +1,697 @@
+
+.gender-selection-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background: #fefefe;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: clamp(10px, 2vw, 20px) clamp(15px, 3vw, 30px);
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 100vh;
+  max-width: 100vw;
+  outline: none;
+}
+
+
+.gender-selection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.gender-selection-logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.gender-selection-logo {
+  width: clamp(32px, 6vw, 48px);
+  height: clamp(32px, 6vw, 48px);
+  margin-right: 8px;
+}
+
+.gender-selection-group-text {
+  color: #333;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.gender-selection-by-text {
+  font-size: clamp(10px, 2vw, 12px);
+  font-weight: 300;
+  color: #666;
+}
+
+.gender-selection-group-name {
+  font-size: clamp(16px, 4vw, 24px);
+  font-weight: 300;
+  color: #171719;
+}
+
+
+.gender-selection-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.gender-selection-back-button {
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  padding: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 400;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  white-space: nowrap;
+}
+
+.gender-selection-back-button:hover {
+  background: #ffffff;
+  border-color: var(--primary-color, #0171e4);
+  color: var(--primary-color, #0171e4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(1, 113, 228, 0.15);
+}
+
+.back-tooltip {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.back-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+.gender-selection-progress-indicator {
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 500;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+  min-width: 50px;
+  text-align: center;
+}
+
+
+.gender-selection-kvkk-message {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: #f4f4f4;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 20;
+  animation: kvkkSlideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 600px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.kvkk-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.kvkk-text {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 400;
+  color: #495057;
+  line-height: 1.4;
+  flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.kvkk-button {
+  background: transparent;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(10px, 2vw, 12px);
+  font-weight: 500;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.kvkk-button:hover {
+  background: #007bff;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.kvkk-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #7E7E7E;
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: none;
+  width: 24px;
+  height: 24px;
+}
+
+
+
+.gender-selection-content {
+
+ z-index: -9000;
+
+}
+
+.kvkk-close:hover {
+  background: #515151;
+  transform: scale(1.05);
+}
+
+@keyframes kvkkSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.gender-selection-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+  margin: clamp(5px, 1vw, 10px) 0;
+  min-height: 0;
+  gap: 40px;
+}
+
+
+.gender-selection-title {
+  text-align: center;
+  width: 100%;
+}
+
+.gender-selection-title h1 {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(24px, 6vw, 36px);
+  font-weight: 300;
+  color: #1e1f28;
+  margin: 0 0 12px 0;
+  padding: 0;
+}
+
+.gender-selection-subtitle {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 16px);
+  font-weight: 300;
+  color: #666;
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+
+.gender-selection-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: min(600px, 90vw);
+  animation: seamlessTransform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.gender-selection-options {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.gender-selection-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  background: #ffffff;
+  border: 3px solid #e9ecef;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.gender-selection-option:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: #0171e4;
+}
+
+.gender-selection-option.selected {
+  background: #f0f8ff;
+  border-color: #0171e4;
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 12px 24px rgba(1, 113, 228, 0.2);
+  animation: selectedGenderPulse 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
+.gender-selection-option.selected[data-gender="female"] {
+  background: #fce4ec;
+  border-color: #e91e63;
+  box-shadow: 0 12px 24px rgba(233, 30, 99, 0.2);
+}
+
+.gender-selection-option.selected[data-gender="female"] .gender-icon {
+  color: #e91e63;
+}
+
+.gender-selection-option.selected[data-gender="female"] .gender-label {
+  color: #e91e63;
+}
+
+.gender-icon {
+  font-size: 80px;
+  font-weight: 300;
+  color: #666;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.gender-selection-option.selected .gender-icon {
+  color: #0171e4;
+  transform: scale(1.1);
+}
+
+.gender-label {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: 400;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.gender-selection-option.selected .gender-label {
+  color: #0171e4;
+  font-weight: 500;
+}
+
+
+.gender-selection-next-page-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary-color, #0171e4);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 14px);
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  animation: nextButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gender-selection-next-page-button:hover:not(.disabled) {
+  background: var(--primary-hover, #0056b3);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(1, 113, 228, 0.4);
+}
+
+.gender-selection-next-page-button:active:not(.disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.gender-selection-next-page-button.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.gender-selection-next-page-button svg {
+  transition: transform 0.2s ease;
+}
+
+.gender-selection-next-page-button:hover:not(.disabled) svg {
+  transform: translateX(2px);
+}
+
+@keyframes nextButtonSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+
+.fade-in {
+  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-out {
+  animation: fadeOutDown 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+}
+
+
+.gender-selection-content {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gender-selection-title {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gender-selection-input-container {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+@keyframes seamlessTransform {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(5px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+@keyframes selectedGenderPulse {
+  0% {
+    transform: translateY(-8px) scale(1.05);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.08);
+  }
+  100% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .gender-selection-content {
+    gap: 30px;
+  }
+  
+  .gender-selection-title h1 {
+    font-size: clamp(28px, 7vw, 36px);
+  }
+  
+  .gender-selection-subtitle {
+    font-size: clamp(16px, 3.5vw, 20px);
+  }
+  
+  .gender-selection-input-container {
+    max-width: min(500px, 85vw);
+  }
+  
+  .gender-selection-header-right {
+    gap: 8px;
+  }
+  
+  .gender-selection-back-button {
+    width: 36px;
+    height: 36px;
+    font-size: clamp(10px, 2vw, 12px);
+  }
+  
+  .gender-selection-options {
+    gap: 20px;
+  }
+  
+  .gender-selection-option {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .gender-icon {
+    font-size: 60px;
+    margin-bottom: 12px;
+  }
+  
+  .gender-label {
+    font-size: clamp(16px, 3.5vw, 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .gender-selection-container {
+    padding: 8px 12px;
+  }
+  
+  .gender-selection-content {
+    gap: 25px;
+  }
+  
+  .gender-selection-title h1 {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+  
+  .gender-selection-subtitle {
+    font-size: clamp(14px, 3vw, 18px);
+  }
+  
+  .gender-selection-input-container {
+    max-width: min(400px, 80vw);
+  }
+  
+  .gender-selection-header-right {
+    gap: 6px;
+  }
+  .gender-selection-title h1 {
+    font-size: 42px !important;
+  }
+
+  .gender-selection-content {
+
+    margin-top: -120px !important;
+ 
+  }
+
+  .gender-selection-header {
+   
+    margin: 16px 0px 0px 0px;
+
+  }
+
+  .gender-selection-header-right {
+    gap: 20px;
+  }
+
+  .gender-selection-back-button {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 999px !important;
+    font-size: clamp(9px, 1.8vw, 11px);
+  }
+
+  .gender-selection-progress-indicator {
+
+    padding: 14px 26px;
+
+  }
+  
+  .gender-selection-subtitle {
+    font-size: 16px !important;
+  }
+  .gender-selection-back-button {
+    width: 32px;
+    height: 32px;
+    font-size: clamp(9px, 1.8vw, 11px);
+  }
+  
+  
+  .gender-selection-next-page-button {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    width: auto;
+    background: #0171E4;
+    color: white;
+    border: none;
+    border-radius: 36px;
+    padding: 24px 20px;
+    font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(16px, 2.8vw, 15px);
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+    animation: nextButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .gender-selection-options {
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .gender-selection-option {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .gender-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .gender-label {
+    font-size: clamp(14px, 3vw, 18px);
+  }
+  
+  .gender-selection-kvkk-message {
+    bottom: 80px;
+    left: 15px;
+    right: 15px;
+    padding: 14px 16px;
+    max-width: 100%;
+    gap: 12px;
+  }
+  
+  .kvkk-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .kvkk-text {
+    font-size: clamp(10px, 2vw, 12px);
+    line-height: 1.3;
+  }
+  
+  .kvkk-button {
+    padding: 6px 14px;
+    font-size: clamp(9px, 1.8vw, 11px);
+    align-self: flex-start;
+  }
+}

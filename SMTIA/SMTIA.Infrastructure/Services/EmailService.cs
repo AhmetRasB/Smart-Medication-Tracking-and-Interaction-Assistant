@@ -28,10 +28,13 @@ namespace SMTIA.Infrastructure.Services
                 var fromEmail = _configuration["EmailSettings:FromEmail"] ?? "noreply@smtia.com";
                 var fromName = _configuration["EmailSettings:FromName"] ?? "SMTIA";
 
+                _logger.LogInformation("Attempting to send email to {Email} via {Host}:{Port}", to, smtpHost, smtpPort);
+
                 using var client = new SmtpClient(smtpHost, smtpPort)
                 {
                     Credentials = new NetworkCredential(smtpUsername, smtpPassword),
-                    EnableSsl = true
+                    EnableSsl = true,
+                    Timeout = 30000 // 30 seconds timeout
                 };
 
                 using var message = new MailMessage
@@ -44,15 +47,14 @@ namespace SMTIA.Infrastructure.Services
 
                 message.To.Add(to);
 
-                await client.SendMailAsync(message);
+                await client.SendMailAsync(message, cancellationToken);
                 _logger.LogInformation("Email sent successfully to {Email}", to);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to send email to {Email}", to);
+                _logger.LogError(ex, "Failed to send email to {Email}. Error: {ErrorMessage}", to, ex.Message);
                 throw;
             }
         }
     }
 }
-

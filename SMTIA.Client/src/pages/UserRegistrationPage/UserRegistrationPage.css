@@ -1,0 +1,935 @@
+
+.user-registration-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background: #fefefe;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: clamp(10px, 2vw, 20px) clamp(15px, 3vw, 30px);
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 100vh;
+  max-width: 100vw;
+}
+
+
+.user-registration-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.user-registration-logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.user-registration-logo {
+  width: clamp(32px, 6vw, 48px);
+  height: clamp(32px, 6vw, 48px);
+  margin-right: 8px;
+}
+
+.user-registration-group-text {
+  color: #333;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.user-registration-by-text {
+  font-size: clamp(10px, 2vw, 12px);
+  font-weight: 300;
+  color: #666;
+}
+
+.user-registration-group-name {
+  font-size: clamp(16px, 4vw, 24px);
+  font-weight: 300;
+  color: #171719;
+}
+
+
+.user-registration-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.user-registration-progress-indicator {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 14px);
+  font-weight: 400;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.user-registration-progress-indicator:hover {
+  border-color: var(--primary-color, #0171e4);
+  color: var(--primary-color, #0171e4);
+}
+
+
+.user-registration-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+  margin: clamp(5px, 1vw, 10px) 0;
+  min-height: 0;
+  gap: 40px;
+}
+
+
+
+.user-registration-title {
+  text-align: center;
+  width: 100%;
+}
+
+.user-registration-title h1 {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(24px, 6vw, 36px);
+  font-weight: 300;
+  color: #1e1f28;
+  margin: 0;
+  padding: 0;
+}
+
+
+.user-registration-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: min(365px, 80vw);
+  animation: seamlessTransform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-registration-input-wrapper {
+  display: flex;
+  width: 100%;
+  height: 65px;
+  background: #f8f9fa;
+  border-radius: 45px;
+  border: 2px solid #e9ecef;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.user-registration-input-wrapper:focus-within {
+  border-color: var(--primary-color, #0171e4);
+  box-shadow: 0 0 0 3px rgba(1, 113, 228, 0.1), 0 4px 12px rgba(1, 113, 228, 0.15);
+  transform: translateY(-1px);
+}
+
+.user-registration-input-wrapper.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1), 0 4px 12px rgba(231, 76, 60, 0.15);
+}
+
+.user-registration-input-wrapper.error:focus-within {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1), 0 4px 12px rgba(231, 76, 60, 0.15);
+}
+
+.user-registration-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 20px 24px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 16px);
+  background: transparent;
+  color: var(--dark-text, #1e1f28);
+  transition: all 0.3s ease;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-registration-input::placeholder {
+  color: #999;
+  font-weight: 300;
+}
+
+.user-registration-button {
+  background: var(--primary-color, #0171e4);
+  border: none;
+  color: var(--white-text, #f5f5f5);
+  padding: 20px 24px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 16px);
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  min-width: 100px;
+  max-width: 100px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-registration-button-mobile {
+  display: none;
+}
+
+.user-registration-button:hover:not(:disabled) {
+  background: var(--primary-hover, #0056b3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+}
+
+.user-registration-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+
+.user-registration-password-toggle {
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 6px;
+  margin-right: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.user-registration-password-toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #333;
+  transform: scale(1.05);
+}
+
+.user-registration-password-toggle:active {
+  transform: scale(0.95);
+}
+
+.user-registration-password-toggle svg {
+  transition: all 0.2s ease;
+}
+
+.user-registration-password-toggle:hover svg {
+  stroke-width: 2.5;
+}
+
+.user-registration-back-link {
+  color: #666;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 14px);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-decoration: underline;
+}
+
+.user-registration-back-link:hover {
+  color: var(--primary-color, #0171e4);
+}
+
+
+.user-registration-password-requirements {
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+  border: none;
+  animation: requirementsSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.requirements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.requirement-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.requirement-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.requirement-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #999;
+  transition: all 0.3s ease;
+}
+
+.requirement-text {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.requirement-item.completed .requirement-text {
+  text-decoration: line-through;
+  color: #10b981;
+}
+
+.requirement-item.completed .requirement-icon svg {
+  color: #10b981;
+  animation: checkmarkAppear 0.3s ease;
+}
+
+@keyframes requirementsSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes checkmarkAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+.user-registration-error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e74c3c;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 400;
+  margin-top: 12px;
+  text-align: left;
+  animation: errorSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: none;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.error-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: errorIconPulse 0.6s ease-in-out;
+}
+
+.error-icon svg {
+  transition: all 0.2s ease;
+}
+
+@keyframes errorIconPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.error-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+@keyframes errorSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-5px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.user-registration-back-button {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  padding: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 400;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  white-space: nowrap;
+}
+
+.user-registration-back-button:hover {
+  background: #ffffff;
+  border-color: var(--primary-color, #0171e4);
+  color: var(--primary-color, #0171e4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(1, 113, 228, 0.15);
+}
+
+.back-tooltip {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.back-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+.user-registration-next-page-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary-color, #0171e4);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 14px);
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  animation: nextButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-registration-next-page-button:hover {
+  background: var(--primary-hover, #0056b3);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(1, 113, 228, 0.4);
+}
+
+.user-registration-next-page-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.user-registration-next-page-button svg {
+  transition: transform 0.2s ease;
+}
+
+.user-registration-next-page-button:hover svg {
+  transform: translateX(2px);
+}
+
+@keyframes nextButtonSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+
+.user-registration-kvkk-message {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: #f4f4f4;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 20;
+  animation: kvkkSlideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 600px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.kvkk-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.kvkk-text {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 400;
+  color: #495057;
+  line-height: 1.4;
+  flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.kvkk-button {
+  background: transparent;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(10px, 2vw, 12px);
+  font-weight: 500;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.kvkk-button:hover {
+  background: #007bff;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.kvkk-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #7E7E7E;
+
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  z-index: 21;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.kvkk-close:hover {
+  background: #515151;
+  transform: scale(1.05);
+}
+
+@keyframes kvkkSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.fade-in {
+  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-out {
+  animation: fadeOutDown 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+}
+
+
+.user-registration-content {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-registration-title {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-registration-input-container {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.user-registration-button.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #ccc;
+}
+
+.user-registration-button.disabled:hover {
+  background: #ccc;
+  transform: none;
+  box-shadow: none;
+}
+
+
+@keyframes seamlessTransform {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(5px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .user-registration-content {
+    gap: 30px;
+  }
+  
+  .user-registration-title h1 {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  
+  .user-registration-input-container {
+    max-width: min(300px, 70vw);
+  }
+  
+  .user-registration-header-right {
+    gap: 8px;
+  }
+  
+  .user-registration-back-button {
+    width: 36px;
+    height: 36px;
+    font-size: clamp(10px, 2vw, 12px);
+  }
+  
+  .user-registration-input-wrapper {
+    height: 60px;
+  }
+  
+  .user-registration-input {
+    padding: 18px 20px;
+  }
+  
+  .user-registration-button {
+    padding: 18px 20px;
+    min-width: 90px;
+    max-width: 90px;
+    font-size: clamp(11px, 2.2vw, 14px);
+  }
+  
+  .user-registration-button-inline {
+    display: none;
+  }
+  
+  .user-registration-button-mobile {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    min-width: auto;
+    margin-top: 16px;
+    border-radius: 45px;
+    padding: 18px 24px;
+  }
+  
+  
+  .user-registration-next-page-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    background: #0171E4;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 16px 24px;
+    font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(14px, 3vw, 16px);
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+    animation: nextButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@media (max-width: 480px) {
+  .user-registration-container {
+    padding: 8px 12px;
+  }
+  
+  .user-registration-content {
+    gap: 32px;
+  }
+  
+  .user-registration-title h1 {
+    font-size: clamp(18px, 4vw, 24px);
+  }
+  
+  .user-registration-input-container {
+    max-width: min(250px, 60vw);
+  }
+  
+
+
+  .user-registration-header {
+   
+    margin: 16px 0px 0px 0px;
+
+  }
+
+  .user-registration-header-right {
+    gap: 20px;
+  }
+
+  .user-registration-back-button {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 999px !important;
+    font-size: clamp(9px, 1.8vw, 11px);
+  }
+
+  .user-registration-progress-indicator {
+
+    padding: 14px 26px;
+
+  }
+
+
+
+  
+  .user-registration-input-wrapper {
+    height: 70px;
+  }
+  
+  
+  .user-registration-input {
+    padding: 24px 18px;
+
+    font-size: clamp(13px, 2.3vw, 15px);
+  }
+  
+  .user-registration-button {
+    padding: 16px 18px;
+    min-width: 85px;
+    max-width: 85px;
+    font-size: clamp(10px, 2vw, 13px);
+  }
+  
+  .user-registration-button-inline {
+    display: none;
+  }
+
+  h1{
+    font-size: 36px !important;
+  }
+  
+  .user-registration-button-mobile {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    min-width: auto;
+    margin-top: 36px;
+    border-radius: 45px;
+    padding: 24px 20px;
+    font-size: 16px !important;
+  }
+  
+  .user-registration-kvkk-message {
+    bottom: 70px;
+  }
+  
+  
+  .user-registration-next-page-button {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    width: auto;
+    background: #0171E4;
+    color: white;
+    border: none;
+    border-radius: 36px;
+    padding: 24px 20px;
+    font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(16px, 2.8vw, 15px);
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+    animation: nextButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .user-registration-input-container {
+
+    width: 100%;
+   
+    max-width: min(365px, 100vw);
+
+  }
+  
+  .user-registration-kvkk-message {
+    bottom: 20px;
+    left: 15px;
+    right: 15px;
+    padding: 14px 16px;
+    max-width: 100%;
+    gap: 12px;
+  }
+  
+  .kvkk-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .kvkk-text {
+    font-size: clamp(10px, 2vw, 12px);
+    line-height: 1.3;
+  }
+  
+  .kvkk-button {
+    padding: 6px 14px;
+    font-size: clamp(9px, 1.8vw, 11px);
+    align-self: flex-start;
+  }
+}
+
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

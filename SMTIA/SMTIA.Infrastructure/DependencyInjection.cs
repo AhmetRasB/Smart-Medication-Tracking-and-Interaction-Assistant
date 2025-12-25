@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Text;
 using GenericRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Scrutor;
 using SMTIA.Application.Abstractions;
 using SMTIA.Domain.Abstractions;
@@ -35,10 +38,16 @@ namespace SMTIA.Infrastructure
             services.AddScoped<Application.Services.IEmailService, Services.EmailService>();
 
             // Register FDA service
-            services.AddHttpClient<Application.Services.IFdaService, Services.FdaService>();
+            // OpenFDA disabled -> use dummy service for stable UX
+            services.AddScoped<Application.Services.IFdaService, Services.DummyFdaService>();
 
             // Register Audit Log service
             services.AddScoped<Application.Services.IAuditLogService, Services.AuditLogService>();
+
+            // Register Gemma AI service
+            services.Configure<GemmaOptions>(configuration.GetSection("Gemma"));
+            services.ConfigureOptions<GemmaOptionsSetup>();
+            services.AddHttpClient<Application.Services.IGemmaInteractionAnalyzer, Services.GemmaInteractionAnalyzer>();
 
             services
                 .AddIdentity<AppUser, IdentityRole<Guid>>(cfr =>
@@ -57,12 +66,12 @@ namespace SMTIA.Infrastructure
                 .AddDefaultTokenProviders();
 
             services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
-            services.ConfigureOptions<JwtTokenOptionsSetup>();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer();
+            services.ConfigureOptions<JwtTokenOptionsSetup>();
             services.AddAuthorization();
 
             services.Scan(action =>

@@ -1,0 +1,1026 @@
+.add-capsule-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background: #fefefe;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: clamp(10px, 2vw, 20px) clamp(15px, 3vw, 30px);
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 100vh;
+  max-width: 100vw;
+  outline: none;
+}
+
+.add-capsule-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.add-capsule-logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.add-capsule-logo {
+  width: clamp(32px, 6vw, 48px);
+  height: clamp(32px, 6vw, 48px);
+  margin-right: 8px;
+}
+
+.add-capsule-group-text {
+  color: #333;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.add-capsule-by-text {
+  font-size: clamp(10px, 2vw, 12px);
+  font-weight: 300;
+  color: #666;
+}
+
+.add-capsule-group-name {
+  font-size: clamp(16px, 4vw, 24px);
+  font-weight: 300;
+  color: #171719;
+}
+
+.add-capsule-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.add-capsule-back-button {
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  padding: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 400;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  white-space: nowrap;
+}
+
+.add-capsule-back-button:hover {
+  background: #ffffff;
+  border-color: var(--primary-color, #0171e4);
+  color: var(--primary-color, #0171e4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(1, 113, 228, 0.15);
+}
+
+.back-tooltip {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.back-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.add-capsule-progress-indicator {
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 500;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+  min-width: 50px;
+  text-align: center;
+}
+
+.add-capsule-kvkk-message {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: #f4f4f4;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 20;
+  animation: kvkkSlideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 600px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.kvkk-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.kvkk-text {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 400;
+  color: #495057;
+  line-height: 1.4;
+  flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.kvkk-button {
+  background: transparent;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(10px, 2vw, 12px);
+  font-weight: 500;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.kvkk-button:hover {
+  background: #007bff;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.kvkk-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #7E7E7E;
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: none;
+  width: 24px;
+  height: 24px;
+}
+
+.kvkk-close:hover {
+  background: #515151;
+  transform: scale(1.05);
+}
+
+@keyframes kvkkSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-capsule-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+  margin: clamp(5px, 1vw, 10px) 0;
+  min-height: 0;
+  gap: 40px;
+}
+
+.add-capsule-title {
+  text-align: center;
+  width: 100%;
+}
+
+.add-capsule-title h1 {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(24px, 6vw, 36px);
+  font-weight: 300;
+  color: #1e1f28;
+  margin: 0 0 12px 0;
+  padding: 0;
+}
+
+.add-capsule-subtitle {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 16px);
+  font-weight: 300;
+  color: #666;
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.add-capsule-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: min(600px, 90vw);
+  animation: seamlessTransform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-capsule-options {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.add-capsule-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background: #ffffff;
+  border: 3px solid #e9ecef;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.add-capsule-option:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: #0171e4;
+}
+
+.add-capsule-option:active {
+  transform: translateY(-2px) scale(0.98);
+  background: #f0f8ff;
+  border-color: #0171e4;
+  box-shadow: 0 12px 24px rgba(1, 113, 228, 0.2);
+}
+
+.add-capsule-icon {
+  font-size: 40px;
+  font-weight: 300;
+  color: #666;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-capsule-option:hover .add-capsule-icon {
+  color: #0171e4;
+  transform: scale(1.1);
+}
+
+.add-capsule-option:active .add-capsule-icon {
+  color: #0171e4;
+  transform: scale(1.15);
+}
+
+
+.add-capsule-medicine-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background: #ffffff;
+  border: 3px solid #e9ecef;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: visible;
+  animation: medicineItemFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  text-align: center;
+}
+
+.add-capsule-medicine-item * {
+  text-align: center;
+}
+
+.add-capsule-medicine-item:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  border-color: #0171e4;
+}
+
+.medicine-remove-button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(255, 71, 87, 0.3);
+}
+
+.medicine-remove-button:hover {
+  background: #ff3742;
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(255, 71, 87, 0.4);
+}
+
+.medicine-remove-button:active {
+  transform: scale(0.95);
+}
+
+.medicine-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.medicine-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.2vw, 14px);
+  font-weight: 400;
+  color: #333;
+  text-align: center !important;
+  line-height: 1.3;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-top: 4px;
+  width: 100%;
+  justify-self: center;
+  align-self: center;
+}
+
+@keyframes medicineItemFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.complete-registration-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 30;
+  animation: completeButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.complete-registration-button {
+  background: var(--primary-color);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(12px, 2.5vw, 14px);
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.complete-registration-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.complete-registration-button:hover::before {
+  left: 100%;
+}
+
+.complete-registration-button:hover {
+
+  box-shadow: 0 6px 20px rgba(1, 113, 228, 0.4);
+  background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+}
+
+.complete-registration-button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(1, 113, 228, 0.3);
+}
+
+.complete-registration-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(1, 113, 228, 0.2);
+}
+
+.complete-registration-button:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(1, 113, 228, 0.2);
+}
+
+.complete-registration-text {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.complete-registration-button svg {
+  transition: transform 0.3s ease;
+}
+
+.complete-registration-button:hover svg {
+  transform: translateX(2px);
+}
+
+@keyframes completeButtonSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.success-screen-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fefefe;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  animation: successScreenFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.success-screen-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(10px, 2vw, 20px) clamp(15px, 3vw, 30px);
+  width: 100%;
+}
+
+.success-screen-logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.success-screen-logo {
+  width: clamp(32px, 6vw, 48px);
+  height: clamp(32px, 6vw, 48px);
+  margin-right: 8px;
+}
+
+.success-screen-group-text {
+  color: #333;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.success-screen-by-text {
+  font-size: clamp(10px, 2vw, 12px);
+  font-weight: 300;
+  color: #666;
+}
+
+.success-screen-group-name {
+  font-size: clamp(16px, 4vw, 24px);
+  font-weight: 300;
+  color: #171719;
+}
+
+.success-screen-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 30px);
+  text-align: center;
+  animation: successContentSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+.success-screen-icon {
+  margin-bottom: 40px;
+  animation: successIconBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s both;
+}
+
+.success-checkmark {
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  border: 3px solid #e9ecef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4caf50;
+  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.success-checkmark:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(76, 175, 80, 0.25);
+  border-color: #4caf50;
+}
+
+.success-screen-title {
+  max-width: 600px;
+  animation: successTextFadeIn 0.6s ease-out 0.6s both;
+}
+
+.success-screen-title h1 {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(24px, 6vw, 36px);
+  font-weight: 300;
+  color: #1e1f28;
+  margin: 0 0 16px 0;
+  padding: 0;
+}
+
+
+
+.add-capsule-content {
+
+z-index: -999;
+
+}
+
+.success-screen-subtitle {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(14px, 2.5vw, 18px);
+  font-weight: 300;
+  color: #666;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+
+
+@keyframes successScreenFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes successContentSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successIconBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+  50% {
+    transform: scale(1.1) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes successTextFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-out {
+  animation: fadeOutDown 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+}
+
+.add-capsule-content {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-capsule-title {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-capsule-input-container {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes seamlessTransform {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(5px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .add-capsule-content {
+    gap: 30px;
+  }
+  
+  .add-capsule-title h1 {
+    font-size: clamp(28px, 7vw, 36px);
+  }
+  
+  .add-capsule-subtitle {
+    font-size: clamp(16px, 3.5vw, 20px);
+  }
+  
+  .add-capsule-input-container {
+    max-width: min(500px, 85vw);
+  }
+  
+  .add-capsule-header-right {
+    gap: 8px;
+  }
+  
+  .add-capsule-back-button {
+    width: 36px;
+    height: 36px;
+    font-size: clamp(10px, 2vw, 12px);
+  }
+  
+  .add-capsule-options {
+    gap: 20px;
+  }
+  
+  .add-capsule-option {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .add-capsule-medicine-item {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .medicine-remove-button {
+    width: 18px;
+    height: 18px;
+    top: -5px;
+    right: -5px;
+  }
+  
+  .medicine-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 6px;
+  }
+  
+  .medicine-name {
+    font-size: clamp(11px, 2vw, 13px);
+    font-weight: 400;
+  }
+  
+  .complete-registration-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    z-index: 30;
+    animation: completeButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .complete-registration-button {
+    width: 100%;
+    background: #0171E4;
+    border: none;
+    border-radius: 25px;
+    padding: 16px 24px;
+    font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(14px, 3vw, 16px);
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: auto;
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-capsule-container {
+    padding: 8px 12px;
+  }
+  
+  .add-capsule-content {
+    gap: 25px;
+  }
+  
+  .add-capsule-title h1 {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+  
+  .add-capsule-subtitle {
+    font-size: clamp(14px, 3vw, 18px);
+  }
+  
+  .add-capsule-input-container {
+    max-width: min(400px, 80vw);
+  }
+  
+  .add-capsule-header-right {
+    gap: 6px;
+  }
+  
+  .add-capsule-back-button {
+    width: 32px;
+    height: 32px;
+    font-size: clamp(9px, 1.8vw, 11px);
+  }
+  
+  .add-capsule-options {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .add-capsule-option {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .add-capsule-medicine-item {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .medicine-remove-button {
+    width: 24px;
+    height: 24px;
+    top: -8px;
+    right: -8px;
+  }
+  
+  .medicine-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 5px;
+  }
+  
+  .medicine-name {
+    font-size: clamp(10px, 1.8vw, 12px);
+    font-weight: 400;
+  }
+  
+  .add-capsule-kvkk-message {
+    bottom: 90px;
+    left: 15px;
+    right: 15px;
+    padding: 14px 16px;
+    max-width: 100%;
+    gap: 12px;
+  }
+  
+  .kvkk-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .kvkk-text {
+    font-size: clamp(10px, 2vw, 12px);
+    line-height: 1.3;
+  }
+  
+  .kvkk-button {
+    padding: 6px 14px;
+    font-size: clamp(9px, 1.8vw, 11px);
+    align-self: flex-start;
+  }
+  
+  .complete-registration-container {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    width: auto;
+    z-index: 30;
+    animation: completeButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .complete-registration-button {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    width: auto;
+    background: #0171E4;
+    color: white;
+    border: none;
+    border-radius: 36px;
+    padding: 24px 20px;
+    font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(16px, 2.8vw, 15px);
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(1, 113, 228, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+    animation: nextButtonSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .success-screen-content {
+    padding: 20px 15px;
+  }
+  
+  .success-screen-icon {
+    margin-bottom: 30px;
+  }
+  
+  .success-checkmark {
+    width: 100px;
+    height: 100px;
+  }
+
+  .gender-selection-title h1 {
+    font-size: 42px !important;
+  }
+
+  .add-capsule-content {
+
+    margin-top: -140px !important;
+ 
+  }
+
+  .add-capsule-header {
+   
+    margin: 16px 0px 0px 0px;
+
+  }
+
+  .add-capsule-header-right {
+    gap: 20px;
+  }
+
+  .add-capsule-back-button {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 999px !important;
+    font-size: clamp(9px, 1.8vw, 11px);
+  }
+
+  .add-capsule-progress-indicator {
+
+    padding: 14px 26px;
+
+  }
+  
+  .add-capsule-subtitle {
+    font-size: 16px !important;
+  }
+  
+  .add-capsule-title h1 {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  
+  .add-capsule-subtitle {
+    font-size: clamp(13px, 2.2vw, 16px);
+  }
+}

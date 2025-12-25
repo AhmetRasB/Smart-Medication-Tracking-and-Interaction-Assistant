@@ -7,7 +7,7 @@ using SMTIA.Domain.Entities;
 
 namespace SMTIA.Infrastructure.Context
 {
-    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, GenericRepository.IUnitOfWork, Application.Abstractions.IUnitOfWork
+    public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, GenericRepository.IUnitOfWork, Application.Abstractions.IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -24,6 +24,11 @@ namespace SMTIA.Infrastructure.Context
         public DbSet<UserAllergy> UserAllergies { get; set; }
         public DbSet<UserDisease> UserDiseases { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
+        public DbSet<InteractionAnalysis> InteractionAnalyses { get; set; }
+        public DbSet<MedicineMapping> MedicineMappings { get; set; }
+        public DbSet<UserSideEffect> UserSideEffects { get; set; }
+        public DbSet<UserEmergencyContact> UserEmergencyContacts { get; set; }
+        public DbSet<UserSurgery> UserSurgeries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using SMTIA.Application.Abstractions;
 using SMTIA.Application.Services;
 using SMTIA.Domain.Entities;
@@ -12,7 +13,8 @@ namespace SMTIA.Application.Features.Auth.Register
         IRepository<UserAllergy> allergyRepository,
         IRepository<UserDisease> diseaseRepository,
         IUnitOfWork unitOfWork,
-        IEmailService emailService) : IRequestHandler<RegisterCommand, Result<RegisterCommandResponse>>
+        IEmailService emailService,
+        ILogger<RegisterCommandHandler> logger) : IRequestHandler<RegisterCommand, Result<RegisterCommandResponse>>
     {
         public async Task<Result<RegisterCommandResponse>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
@@ -262,11 +264,13 @@ namespace SMTIA.Application.Features.Auth.Register
                     "SMTIA - E-posta Onayı",
                     emailBody,
                     cancellationToken);
+                logger.LogInformation("Email confirmation sent successfully to {Email}", request.Email);
             }
-            catch
+            catch (Exception ex)
             {
                 // Log the error but don't fail registration
                 // Email can be resent later
+                logger.LogError(ex, "Failed to send email confirmation to {Email}", request.Email);
             }
 
             // Add allergies if provided

@@ -1,0 +1,7721 @@
+
+
+
+@media (max-width: 480px) {
+  html, body {
+    
+    -webkit-overflow-scrolling: touch;
+    
+    touch-action: manipulation;
+    
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+  
+  
+  body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  
+  
+  .ai-chat-floating-button {
+    
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    
+    visibility: visible;
+    opacity: 1;
+    
+    contain: layout style paint;
+  }
+}
+
+
+.dashboard-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-container.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dashboard-container.fade-in {
+  animation: dashboardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes dashboardFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.dashboard-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-container.loaded .dashboard-section {
+  opacity: 1;
+  transform: translateY(0);
+  animation: sectionSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.dashboard-container.loaded .dashboard-section:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.dashboard-container.loaded .dashboard-section:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dashboard-container.loaded .dashboard-section:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes sectionSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.mobile-hamburger-menu {
+  display: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.mobile-hamburger-menu:hover .hamburger-icon {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; 
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu-popup {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 90%;
+  height: auto;
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px); 
+  margin: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: mobileMenuSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.mobile-menu-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.mobile-menu-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-menu-close:hover {
+  background-color: #f5f5f5;
+}
+
+.mobile-menu-items {
+  padding: 8px 0;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-menu-item:hover {
+  background-color: #f8f9fa;
+}
+
+.mobile-menu-item.mobile-menu-logout {
+  border-top: 1px solid #f0f0f0;
+  margin-top: 8px;
+}
+
+.mobile-menu-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.mobile-menu-icon-wrapper {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu-icon-wrapper svg {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+.mobile-menu-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.mobile-menu-logout .mobile-menu-text {
+  color: #e74c3c;
+}
+
+.mobile-menu-item-notifications .mobile-menu-icon-wrapper {
+  position: relative;
+}
+
+.mobile-menu-notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #e74c3c;
+  color: #ffffff;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 4px;
+  box-sizing: border-box;
+  border: 2px solid #ffffff;
+}
+
+@keyframes mobileMenuSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+
+.ai-logo svg defs {
+  display: block;
+}
+
+.intro-container{
+  padding: 0;
+
+}
+
+.ai-logo svg defs linearGradient {
+  display: block;
+}
+
+.ai-avatar-img svg defs {
+  display: block;
+}
+
+.ai-avatar-img svg defs linearGradient {
+  display: block;
+}
+
+
+@keyframes gradientShift {
+  0% {
+    stop-color: #3B82F6;
+  }
+  20% {
+    stop-color: #1D4ED8;
+  }
+  40% {
+    stop-color: #2563EB;
+  }
+  60% {
+    stop-color: #1E40AF;
+  }
+  80% {
+    stop-color: #1E3A8A;
+  }
+  100% {
+    stop-color: #3B82F6;
+  }
+}
+
+@keyframes gradientShiftReverse {
+  0% {
+    stop-color: #1E3A8A;
+  }
+  20% {
+    stop-color: #1E40AF;
+  }
+  40% {
+    stop-color: #2563EB;
+  }
+  60% {
+    stop-color: #1D4ED8;
+  }
+  80% {
+    stop-color: #3B82F6;
+  }
+  100% {
+    stop-color: #1E3A8A;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.8));
+  }
+  25% {
+    filter: drop-shadow(0 0 30px rgba(147, 197, 253, 1));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(59, 130, 246, 1));
+  }
+  75% {
+    filter: drop-shadow(0 0 35px rgba(96, 165, 250, 0.9));
+  }
+}
+
+@keyframes strokePulse {
+  0%, 100% {
+    stroke-width: 4;
+  }
+  50% {
+    stroke-width: 4.5;
+  }
+}
+
+@keyframes strokePulseHover {
+  0%, 100% {
+    stroke-width: 5;
+    filter: drop-shadow(0 0 25px rgba(59, 130, 246, 0.9));
+  }
+  50% {
+    stroke-width: 6;
+    filter: drop-shadow(0 0 35px rgba(59, 130, 246, 1));
+  }
+}
+
+@keyframes pulseGlowCompact {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.7));
+  }
+  25% {
+    filter: drop-shadow(0 0 20px rgba(147, 197, 253, 0.9));
+  }
+  50% {
+    filter: drop-shadow(0 0 30px rgba(59, 130, 246, 1));
+  }
+  75% {
+    filter: drop-shadow(0 0 25px rgba(96, 165, 250, 0.9));
+  }
+}
+
+@keyframes strokePulseCompact {
+  0%, 100% {
+    stroke-width: 3;
+  }
+  50% {
+    stroke-width: 3.5;
+  }
+}
+
+@keyframes strokePulseHoverCompact {
+  0%, 100% {
+    stroke-width: 4;
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8));
+  }
+  50% {
+    stroke-width: 5;
+    filter: drop-shadow(0 0 30px rgba(59, 130, 246, 1));
+  }
+}
+
+@keyframes pulseGlowAvatar {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(96, 165, 250, 0.5));
+  }
+  25% {
+    filter: drop-shadow(0 0 8px rgba(147, 197, 253, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.7));
+  }
+  75% {
+    filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6));
+  }
+}
+
+@keyframes strokePulseAvatar {
+  0%, 100% {
+    stroke-width: 2.5;
+  }
+  50% {
+    stroke-width: 3;
+  }
+}
+
+@keyframes strokePulseHoverAvatar {
+  0%, 100% {
+    stroke-width: 3;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+  }
+  50% {
+    stroke-width: 3.5;
+    filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.7));
+  }
+}
+
+.dashboard-container {
+  background: #FFFFFF;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: visible;
+  outline: none;
+  
+  -webkit-overflow-scrolling: touch;
+  
+  position: relative;
+  overflow: visible;
+}
+
+
+@media (max-width: 489px) {
+  .dashboard-container {
+    
+    position: relative;
+    
+    contain: layout;
+    
+    -webkit-overflow-scrolling: touch;
+    
+    width: 100%;
+    min-height: 100vh;
+    
+    transform: translateZ(0);
+    box-sizing: border-box;
+  }
+}
+
+.dashboard-container .intro-container{
+  padding: 0 !important;
+}
+
+
+.dashboard-sidebar {
+  width: 120px;
+  height: 100vh;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#logoXBg{
+  background: #161719;
+
+
+}
+
+
+.dashboard-section{
+ position: relative;
+ max-width: 1650px;
+ min-height: auto;
+ margin: 0 auto clamp(12px, 2vw, 20px) auto;
+ width: 100%;
+ box-sizing: border-box;
+ overflow: visible;
+}
+
+
+
+.dashboard-two-colm{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap: clamp(16px, 2.5vw, 26px);
+  align-items: flex-start;
+  overflow: visible;
+  flex-wrap: wrap;
+}
+
+.dashboard-colm-1{
+  width: 45%;
+  min-width: 300px;
+  height: 100%;
+  display: flex;
+  gap: clamp(12px, 1.5vw, 16px);
+  flex-direction: column;
+  flex: 1;
+}
+
+
+.health-stats-cards {
+  display: flex;
+  gap: clamp(12px, 2vw, 16px);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.health-stats-cards-bottom {
+  margin-top: 32px;
+}
+
+.health-stat-card {
+  justify-content: flex-start;
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: clamp(16px, 3vw, 24px);
+  padding: clamp(18px, 3vw, 32px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 24px);
+  align-items: flex-start;
+  min-height: auto;
+}
+
+
+
+.bmi-card {
+  background: #E0E9EB;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bmi-card:not(.blur-sensitive):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.interaction-card {
+  background: #E5EBE0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.interaction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.side-effect-card {
+  background: #EBE0E0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.side-effect-card:not(.disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.side-effect-card.disabled {
+  opacity: 0.6;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.health-card {
+  background: #C8D7E3;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.health-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.health-stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.health-stat-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.health-stat-title span {
+  font-family: Inter;
+  color: #2F2F2F;
+  font-size: clamp(18px, 3vw, 28px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 135%; 
+  letter-spacing: 0.56px;
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+}
+
+.health-stat-value {
+  color: #3D3D3D;
+  font-family: Rubik;
+  font-size: clamp(32px, 6vw, 64px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 121.055%;
+}
+
+.side-effect-value {
+  font-size: clamp(28px, 5vw, 48px);
+}
+
+
+.health-stat-bar-container {
+  width: 100%;
+  position: relative;
+  margin-bottom: 0;
+  margin-top: clamp(12px, 2vw, 24px);
+  margin-left: 0;
+  padding-left: 0;
+  box-sizing: border-box;
+}
+
+.health-stat-bar {
+  width: 100%;
+  height: 18px;
+  border-radius: 12px;
+  display: flex;
+  overflow: visible;
+  position: relative;
+}
+
+.bar-segment {
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.bar-marker {
+  position: absolute;
+  top: -8px;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 36px;
+  background: #1A1A1A;
+  border-radius: 2px;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.health-stat-status {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 400;
+  color: #2F2F2F;
+  line-height: 1.4;
+  text-align: center;
+  margin-top: clamp(12px, 1.5vw, 16px);
+}
+
+.status-text {
+  color: #2F2F2F;
+}
+
+.status-highlight {
+  font-weight: 600;
+}
+
+
+.interaction-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(3px, 0.5vw, 5px);
+  height: clamp(60px, 12vw, 120px);
+  width: 100%;
+  margin-top: clamp(12px, 2vw, 24px);
+  padding: 0;
+}
+
+.interaction-bar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 20px;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  width: calc((100% - 60px) / 13);
+  border: none;
+  outline: none;
+}
+
+.bar-fill {
+  width: 100%;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  border: none;
+  outline: none;
+}
+
+.bar-fill-top {
+  width: 100%;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  border: none;
+  outline: none;
+}
+
+
+.side-effect-legend {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legend-dot-pink {
+  background: #E29595;
+}
+
+.legend-dot-blue {
+  background: #9695E2;
+}
+
+.legend-text {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  color: #66747F;
+  line-height: 1.4;
+}
+
+.side-effect-progress-bar {
+  width: 100%;
+  height: 18px;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.progress-segment {
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.progress-segment-blue {
+  background: #9695E2;
+}
+
+.progress-segment-pink {
+  background: #E29595;
+}
+
+
+.health-card-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.health-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.health-card-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.health-card-view-button {
+  background: #66747F;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 32px;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.health-card-view-button:hover {
+  background: #55626D;
+  transform: translateY(-1px);
+}
+
+.health-card-view-button:active {
+  transform: translateY(0);
+}
+
+.dashboard-add-capsule{
+  width: 100%;
+  height: 36%;
+  margin-top: 32px;
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 24px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+}
+
+
+.dashboard-medicine-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.dashboard-medicine-header {
+  margin-bottom: 30px;
+}
+
+.dashboard-medicine-title {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: #000000;
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-medicine-subtitle {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #666666;
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+
+
+.dashboard-medicine-slider-container {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+}
+
+.dashboard-medicine-slider {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.dashboard-medicine-slider::-webkit-scrollbar {
+  display: none; 
+}
+
+.dashboard-medicine-slider:active {
+  cursor: grabbing;
+}
+
+.dashboard-medicine-track {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  width: max-content;
+  padding: 0 10px;
+}
+
+
+
+.slider-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.slider-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: #bdc3c7;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-indicator.active {
+  background: #0466E0;
+  transform: scale(1.2);
+}
+
+.slider-indicator:hover {
+  background: #7f8c8d;
+}
+
+.dashboard-medicine-item {
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  border: none;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.dashboard-medicine-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-medicine-remove-button {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 28px;
+  height: 28px;
+  background: #95a5a6;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-medicine-remove-button:hover {
+  background: #e74c3c;
+  transform: scale(1.1);
+  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.3);
+}
+
+.dashboard-medicine-icon {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+
+.dashboard-medicine-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #2c3e50;
+  text-align: center;
+  line-height: 1.2;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-add-medicine-button {
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  border: none;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #0466E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.dashboard-add-medicine-button:hover {
+  background: #ffffff;
+  color: #0466E0;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-add-medicine-button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-add-medicine-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-add-medicine-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+
+
+.dashboard-nearby-pharmacies {
+  width: 100%;
+  min-height: 300px;
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 24px;
+  padding: 40px;
+  margin-top: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+}
+
+.nearby-pharmacies-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.nearby-pharmacies-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pharmacies-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.view-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.view-mode-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #64748b;
+}
+
+.view-mode-button:hover {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.view-mode-button.active {
+  background: #0466E0;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(4, 102, 224, 0.3);
+}
+
+.view-mode-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nearby-pharmacies-title-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pharmacy-icon {
+  color: #0466E0;
+  flex-shrink: 0;
+}
+
+.nearby-pharmacies-title {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.location-permission-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #57a6da;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.location-permission-button:hover:not(:disabled) {
+  background: #4a95c8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(87, 166, 218, 0.3);
+}
+
+.location-permission-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.location-permission-button svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.nearby-pharmacies-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pharmacies-list-container {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 400px;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.pharmacies-list-container::-webkit-scrollbar {
+  display: none; 
+  width: 0;
+  height: 0;
+}
+
+.pharmacies-map-container {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.leaflet-container {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.custom-pharmacy-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.custom-user-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.night-duty-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fff3cd;
+
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  color: #856404;
+  font-weight: 500;
+}
+
+.night-duty-notice svg {
+  flex-shrink: 0;
+  color: #ffc107;
+}
+
+.pharmacies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pharmacy-item {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.pharmacy-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.pharmacy-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pharmacy-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pharmacy-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.3;
+}
+
+.on-duty-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #e74c3c;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pharmacy-item.on-duty {
+  background: #fff5f5;
+}
+
+.pharmacy-item.on-duty:hover {
+  background: #ffe5e5;
+}
+
+.pharmacy-item.selected {
+  background: #ffffff;
+  border: 2px solid #0466E0;
+  box-shadow: none;
+  transform: none;
+}
+
+.pharmacy-item.selected:hover {
+  background: #ffffff;
+  border: 2px solid #0466E0;
+  box-shadow: none;
+}
+
+.pharmacy-address {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #7f8c8d;
+  line-height: 1.4;
+}
+
+.pharmacy-phone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  color: #0466E0;
+  margin-top: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.pharmacy-phone:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.pharmacy-phone svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.pharmacy-distance {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+  padding-left: 16px;
+}
+
+.distance-value {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #0466E0;
+  line-height: 1;
+}
+
+.distance-unit {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: #7f8c8d;
+  font-weight: 400;
+}
+
+.distance-unit {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: #7f8c8d;
+  font-weight: 400;
+}
+
+.pharmacies-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 200px;
+}
+
+.no-pharmacies-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #7f8c8d;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+}
+
+.dashboard-user-capsule-time{
+  width: 100%;
+  height: 500px;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 24px;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+}
+
+
+.daily-medicine-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+  gap: 24px;
+  box-sizing: border-box;
+  background: #f7f7f7;
+    padding: 32px;
+    border-radius: 24px;
+}
+
+
+.day-selection {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  gap: 2px;
+  padding: 12px 24px;
+  border-radius: 36px;
+  background: #F8F9FA;
+  border: none;
+  box-shadow: none;
+}
+
+.day-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 48px;
+  border: none;
+  background: #ffffff;
+  color: #4A5568;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.day-button:hover {
+  border: none;
+  color: #2D3748;
+  background: #E8F4F8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
+}
+
+.day-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.day-button.today {
+  background: #3498db !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+  opacity: 1 !important;
+  transform: scale(1.02);
+}
+
+.day-button.today:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+}
+
+.day-button.today.past {
+  background: #57a6da !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+  opacity: 1 !important;
+}
+
+.day-button.today.future {
+  background: var(--primary-color) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+  opacity: 1 !important;
+}
+
+.day-button.selected {
+  border: none !important;
+  transform: scale(1.01) !important;
+  background: rgba(52, 152, 219, 0.15) !important;
+  color: #2D3748 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 10px rgba(52, 152, 219, 0.25);
+}
+
+.day-button.selected:hover {
+  transform: translateY(-1px) scale(1.01);
+  background: rgba(52, 152, 219, 0.15) !important;
+  box-shadow: 0 6px 12px rgba(52, 152, 219, 0.25);
+}
+
+.day-button.selected.today {
+  background: #3498db !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+}
+
+.day-button.past:not(.today) {
+  opacity: 0.65;
+  background: #F5F7FA;
+  color: #718096;
+  border: none;
+}
+
+.day-button.past:not(.today):hover {
+  opacity: 0.85;
+  background: #EDF2F7;
+  color: #4A5568;
+}
+
+.day-button.future:not(.today) {
+  opacity: 0.75;
+  background: #ffffff;
+  color: #718096;
+  border: none;
+}
+
+.day-button.future:not(.today):hover {
+  opacity: 0.95;
+  background: #F7FAFC;
+  color: #4A5568;
+}
+
+.day-letter {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
+}
+
+.day-date {
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0.9;
+  letter-spacing: 0.2px;
+}
+
+
+.daily-medicine-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 0;
+  
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+  position: relative;
+  
+  padding-bottom: 40px;
+  
+}
+
+.daily-medicine-list::-webkit-scrollbar {
+  display: none; 
+}
+
+.daily-medicine-item {
+  background: #f0f0f0;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: none;
+  border: none;
+  position: relative;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity, background;
+}
+
+.daily-medicine-item:hover {
+  transform: translateY(-1px);
+  box-shadow: none;
+  border: none;
+  background: #F0F4F8;
+}
+
+.daily-medicine-item:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.daily-medicine-item.completed {
+  background: #F0F4F8;
+  opacity: 0.75;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.daily-medicine-item.completed:hover {
+  background: #E8F0F4;
+  opacity: 0.85;
+}
+
+.daily-medicine-item.time-passed {
+  background: #fff5f5;
+  border: none;
+  cursor: pointer;
+}
+
+.daily-medicine-item.time-passed:hover {
+  background: #ffe5e5;
+  border: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(252, 129, 129, 0.2);
+}
+
+.daily-medicine-item.time-passed.already-consulted {
+  border: none;
+}
+
+.daily-medicine-item.time-passed.already-consulted:hover {
+  border: none;
+}
+
+.daily-medicine-item.already-consulted {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.daily-medicine-item.already-consulted:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.daily-medicine-item.can-take-item {
+  background: #fef9e7;
+  border: none;
+}
+
+.daily-medicine-item.can-take-item:hover {
+  background: #fef3c7;
+  transform: translateY(-1px);
+}
+
+.daily-medicine-item.completed .medicine-icon-container {
+  background: #D1D5DB;
+  opacity: 0.7;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.daily-medicine-item.completed .medicine-icon-container:hover {
+  background: #C4C9D1;
+  opacity: 0.8;
+}
+
+.medicine-icon-container {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: none;
+  border: none;
+  background: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.medicine-icon-container:hover {
+  transform: scale(1.05);
+  box-shadow: none;
+  background: #D1D5DB;
+  border: none;
+}
+
+.daily-medicine-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.daily-medicine-item:hover .daily-medicine-icon {
+  transform: scale(1.1);
+}
+
+.daily-medicine-item .medicine-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start !important;
+  justify-content: center;
+  text-align: left !important;
+}
+
+.daily-medicine-item .medicine-info * {
+  text-align: left !important;
+}
+
+.daily-medicine-item .medicine-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.daily-medicine-item .medicine-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A202C;
+  line-height: 1.3;
+  transition: all 0.3s ease;
+  letter-spacing: 0.2px;
+  text-align: left !important;
+  flex: 1;
+  align-self: flex-start !important;
+  justify-self: flex-start !important;
+}
+
+.completed-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #27AE60;
+  color: #FFFFFF;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  animation: badgeFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.time-passed-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #fc8181;
+  color: #FFFFFF;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  animation: badgeFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.time-passed-hint {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: #d97706;
+  font-weight: 600;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.time-passed-hint:hover {
+  color: #f59e0b;
+  transform: translateX(2px);
+}
+
+.time-passed-hint.sending {
+  color: #3182ce;
+  animation: fadeInOut 0.3s ease;
+}
+
+.time-passed-hint.sent {
+  color: #ea580c;
+  font-weight: 600;
+  animation: fadeInOut 0.3s ease;
+}
+
+.hint-text {
+  animation: fadeIn 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 12px;
+  border: 1px solid #fbbf24;
+  color: #d97706;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hint-text:hover {
+  background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+  border-color: #f59e0b;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+}
+
+.hint-sending {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  animation: fadeIn 0.3s ease;
+}
+
+.hint-sent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  animation: fadeIn 0.3s ease;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  border-radius: 12px;
+  border: none;
+  color: #6b7280;
+}
+
+.hint-sent svg {
+  color: #6b7280;
+  stroke-width: 3;
+  animation: checkmarkPulse 0.6s ease;
+}
+
+.sending-dots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.sending-dots span {
+  display: inline-block;
+  animation: dotBounce 1.4s ease-in-out infinite;
+  font-weight: bold;
+}
+
+.sending-dots span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.sending-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.sending-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dotBounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+@keyframes checkmarkPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+.ai-decision-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease;
+  margin-left: 8px;
+}
+
+.ai-decision-badge.can-take {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border: none;
+  color: #059669;
+}
+
+.ai-decision-badge.cannot-take {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border: none;
+  color: #dc2626;
+}
+
+.ai-decision-badge svg {
+  flex-shrink: 0;
+}
+
+@keyframes badgeFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.daily-medicine-item .medicine-name.completed {
+  text-decoration: line-through;
+  color: #95a5a6;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.daily-medicine-item .medicine-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  color: #4A5568;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  text-align: left !important;
+  width: 100%;
+  align-self: flex-start !important;
+  justify-content: flex-start !important;
+}
+
+.separator {
+  color: #A0AEC0;
+  font-weight: 400;
+}
+
+.medicine-checkbox {
+  flex-shrink: 0;
+}
+
+.checkbox {
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid #CBD5E0;
+  border-radius: 8px;
+  background: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox:hover {
+  border-color: #3498db;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.15);
+}
+
+.checkbox.checked {
+  background: #27ae60;
+  border-color: #27ae60;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.checkbox.checked:hover {
+  background: #229954;
+  border-color: #229954;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(39, 174, 96, 0.4);
+}
+
+.checkbox.checked:hover svg {
+  color: #ffffff;
+  stroke: #ffffff;
+}
+
+.checkbox.disabled {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.checkbox.disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #cbd5e1;
+}
+
+.no-medicines-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  color: #7f8c8d;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+.dashboard-colm-2{
+  position: sticky;
+  top: clamp(12px, 2vw, 20px);
+  width: 55%;
+  min-width: 300px;
+  height: fit-content;
+  max-height: calc(100vh - 40px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: flex-start;
+  flex: 1;
+}
+
+
+.ai-chat-section {
+  width: 100%;
+  height: calc(100vh - 40px);
+  max-height: calc(100vh - 40px);
+  background: #F7F7F7;
+  border: none;
+  border-radius: 24px;
+  padding: 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+
+.ai-chat-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  transition: all 0.5s ease;
+  flex-shrink: 0;
+}
+
+
+.ai-chat-header.centered {
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.ai-chat-header.centered .ai-logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 30px;
+  transition: all 0.5s ease;
+  filter: drop-shadow(0 4px 20px rgba(59, 130, 246, 0.6));
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.ai-chat-header.centered .ai-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ai-chat-header.centered .ai-logo svg path {
+  stroke: url(#aiLogoGradient);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.8s ease;
+  animation: strokePulse 2s ease-in-out infinite;
+}
+
+.ai-chat-header.centered .ai-logo:hover svg path {
+  stroke-width: 5;
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+  animation: strokePulseHover 1s ease-in-out infinite;
+}
+
+.ai-chat-header.centered .ai-chat-title {
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  transition: all 0.5s ease;
+}
+
+
+.ai-chat-header.compact {
+  justify-content: flex-start;
+  flex: 0;
+  margin-bottom: 20px;
+}
+
+.ai-chat-header.compact .ai-logo {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
+  transition: all 0.5s ease;
+  filter: drop-shadow(0 2px 12px rgba(59, 130, 246, 0.5));
+  animation: pulseGlowCompact 3.5s ease-in-out infinite;
+}
+
+.ai-chat-header.compact .ai-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ai-chat-header.compact .ai-logo svg path {
+  stroke: url(#aiLogoGradient);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.8s ease;
+  animation: strokePulseCompact 2.2s ease-in-out infinite;
+}
+
+.ai-chat-header.compact .ai-logo:hover svg path {
+  stroke-width: 4;
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
+  animation: strokePulseHoverCompact 1.2s ease-in-out infinite;
+}
+
+.ai-chat-header.compact .ai-chat-title {
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  transition: all 0.5s ease;
+}
+
+.ai-chat-title p {
+  margin: 0;
+}
+
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  padding-right: 10px;
+  min-height: 0;
+}
+
+
+
+
+
+
+.chat-messages::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+
+.chat-messages {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.chat-message {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.chat-message.user {
+  flex-direction: row-reverse;
+}
+
+.chat-message.ai {
+  flex-direction: row;
+}
+
+.ai-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ai-avatar.has-shadow {
+  filter: drop-shadow(0 1px 4px rgba(59, 130, 246, 0.3));
+  animation: pulseGlowAvatar 4s ease-in-out infinite;
+}
+
+.ai-avatar-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.ai-avatar-img svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ai-avatar-img svg path {
+  stroke: url(#aiLogoGradient);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.6s ease;
+  animation: strokePulseAvatar 2.5s ease-in-out infinite;
+}
+
+.ai-avatar:hover .ai-avatar-img svg path {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.4));
+  animation: strokePulseHoverAvatar 1.5s ease-in-out infinite;
+}
+
+.message-content {
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chat-message.user .message-content {
+  align-items: flex-end;
+}
+
+.chat-message.ai .message-content {
+  align-items: flex-start;
+}
+
+.message-text {
+  background: #FFFFFF;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.chat-message.user .message-text {
+  background: #3498db;
+  color: #ffffff;
+}
+
+.message-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 13px;
+}
+
+.message-text table thead tr {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.message-text table th {
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  font-size: 12px;
+}
+
+.message-text table th:last-child,
+.message-text table td:last-child {
+  text-align: center;
+}
+
+.message-text table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.message-text table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.message-text table tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+.message-text table td {
+  padding: 10px;
+  color: #333;
+  font-size: 12px;
+}
+
+.message-time {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  color: #999;
+}
+
+
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 18px;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #999;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+.chat-input-form {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  padding: 8px 12px;
+  gap: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.chat-input-container:focus-within {
+  border-color: #3498db;
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #333;
+  padding: 8px 12px;
+}
+
+.chat-input::placeholder {
+  color: #999;
+}
+
+.chat-send-button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #3498db;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.chat-send-button:hover:not(:disabled) {
+  background: #2980b9;
+  transform: scale(1.05);
+}
+
+.chat-send-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+.sidebar-nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.nav-item {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #666;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.nav-item:hover::before {
+  opacity: 1;
+}
+
+.nav-item:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: brightness(1) contrast(1);
+}
+
+.nav-item:hover .nav-icon {
+  filter: brightness(1.3) contrast(1.1);
+}
+
+#logoX{
+  width: 24px !important;
+  height: 24px;
+}
+
+.dashboard-main-wrapper {
+  flex: 1;
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: clamp(10px, 2vw, 20px) clamp(15px, 3vw, 30px);
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+
+.dashboard-welcome-section {
+  background: #F7F7F7;
+  border-radius: 24px;
+  padding: clamp(24px, 3vw, 32px);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 2.5vw, 24px);
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+.welcome-hamburger-menu {
+  display: none;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.welcome-hamburger-menu:hover {
+  background: #F3F4F6;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.welcome-hamburger-menu:active {
+  transform: scale(0.95);
+}
+
+.welcome-hamburger-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+
+.welcome-header {
+  display: none;
+}
+
+.app-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+}
+
+.welcome-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+  font-weight: 400;
+}
+
+.welcome-label {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-style: normal;
+  font-weight: 400;
+  color: #121212;
+  line-height: 121.055%;
+}
+
+.welcome-comma {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-style: normal;
+  font-weight: 400;
+  color: #121212;
+  line-height: 121.055%;
+}
+
+.welcome-username {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-style: normal;
+  font-weight: 400;
+  color: #121212;
+  line-height: 121.055%;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.welcome-date {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 400;
+  color: #757575;
+  line-height: 1.2;
+}
+
+
+.welcome-header-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 16px);
+  flex-shrink: 0;
+}
+
+
+.sensitive-data-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-right: 16px;
+}
+
+.sensitive-data-toggle::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 24px;
+  background: #E6E6E6;
+}
+
+.toggle-switch {
+  width: clamp(56px, 6vw, 64px);
+  height: clamp(28px, 3vw, 32px);
+  background: #E6E6E6;
+  border-radius: 16px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.toggle-switch.active {
+  background: #0466E0;
+}
+
+.toggle-slider {
+  width: clamp(20px, 2.5vw, 24px);
+  height: clamp(20px, 2.5vw, 24px);
+  background: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #000000;
+}
+
+.toggle-switch.active .toggle-slider {
+  transform: translateX(clamp(28px, 3.5vw, 32px));
+  background: #0466E0;
+  color: #FFFFFF;
+}
+
+
+.blur-sensitive {
+  filter: blur(15px);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.3s ease;
+}
+
+.toggle-slider svg {
+  width: 16px;
+  height: 16px;
+}
+
+
+.header-action-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon-button {
+  position: relative;
+  width: clamp(44px, 5vw, 54px);
+  height: clamp(44px, 5vw, 54px);
+  border-radius: 50%;
+  background: #F3F4F6;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  color: #6B7280;
+}
+
+.header-icon-button:hover {
+  background: #E5E7EB;
+  transform: scale(1.05);
+}
+
+.header-icon-button:active {
+  transform: scale(0.95);
+}
+
+.header-icon-button-profile {
+  background: #0466E0;
+  color: #FFFFFF;
+}
+
+.header-icon-button-profile:hover {
+  background: #2563EB;
+}
+
+.header-icon-img {
+  width: clamp(22px, 2.5vw, 26px);
+  height: clamp(22px, 2.5vw, 26px);
+  object-fit: contain;
+}
+
+.header-icon-button svg {
+  width: clamp(22px, 2.5vw, 26px);
+  height: clamp(22px, 2.5vw, 26px);
+}
+
+
+.welcome-username.loading {
+  opacity: 0.7;
+  animation: usernamePulse 1.5s ease-in-out infinite;
+}
+
+.welcome-username.loaded {
+  opacity: 1;
+  animation: usernameSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.username-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #3498db;
+  animation: dotPulse 1.4s ease-in-out infinite both;
+}
+
+.loading-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0s;
+}
+
+@keyframes usernamePulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes usernameSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+
+
+
+.ai-chat-floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(250, 250, 250);
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s ease;
+  z-index: 9999;
+  border: 3px solid #ffffff;
+  
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  
+  contain: layout style paint;
+  
+  touch-action: manipulation;
+}
+
+.ai-chat-floating-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.6);
+}
+
+.ai-chat-floating-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+
+.ai-chat-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 197, 253, 0.1) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 0;
+  animation: fadeIn 0.3s ease-out;
+  
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; 
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.ai-chat-popup {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  animation: slideIn 0.4s ease-out;
+  
+  max-height: 100vh;
+  max-height: 100dvh;
+  min-height: 0;
+}
+
+.ai-chat-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e9ecef;
+  position: relative;
+}
+
+.ai-chat-popup-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.ai-chat-popup-logo {
+  width: 32px;
+  height: 32px;
+}
+
+.ai-chat-popup-close {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  color: #666;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-chat-popup-close:hover {
+  background: #e9ecef;
+  color: #333;
+  transform: scale(1.05);
+}
+
+.ai-chat-popup-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+  background: #ffffff;
+  
+  min-height: 0;
+  max-height: calc(100vh - 80px); 
+  max-height: calc(100dvh - 80px);
+}
+
+.ai-chat-popup-content .chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  padding-right: 10px;
+  
+  min-height: 0;
+  max-height: calc(100vh - 200px); 
+  max-height: calc(100dvh - 200px);
+  
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ai-chat-popup-content .chat-input-form {
+  margin-top: auto;
+}
+
+
+.ai-chat-popup-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  flex: 1;
+  min-height: 200px;
+  opacity: 1;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0) scale(1);
+}
+
+
+.ai-chat-popup-welcome.fade-out {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+  pointer-events: none;
+}
+
+.ai-chat-popup-welcome-logo {
+  margin-bottom: 30px;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-chat-popup-welcome.fade-out .ai-chat-popup-welcome-logo {
+  transform: scale(0.8);
+  opacity: 0.7;
+}
+
+.ai-chat-popup-welcome-text {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #333;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-chat-popup-welcome.fade-out .ai-chat-popup-welcome-text {
+  opacity: 0.5;
+  transform: translateY(-10px);
+}
+
+.ai-chat-popup-welcome-text p {
+  margin: 0;
+  margin-bottom: 4px;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-chat-popup-welcome.fade-out .ai-chat-popup-welcome-text p {
+  opacity: 0.3;
+  transform: translateY(-5px);
+}
+
+.ai-chat-popup-welcome-text p:last-child {
+  margin-bottom: 0;
+}
+
+.ai-chat-popup-welcome-logo .ai-logo {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 4px 20px rgba(59, 130, 246, 0.6));
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.ai-chat-popup-welcome-logo .ai-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ai-chat-popup-welcome-logo .ai-logo svg path {
+  stroke: url(#aiLogoGradient);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.8s ease;
+  animation: strokePulse 2s ease-in-out infinite;
+}
+
+.ai-chat-popup-welcome-logo:hover .ai-logo svg path {
+  stroke-width: 5;
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+  animation: strokePulseHover 1s ease-in-out infinite;
+}
+
+.ai-chat-popup-welcome.fade-out .ai-chat-popup-welcome-logo .ai-logo {
+  animation: none;
+  filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
+}
+
+.ai-chat-popup-welcome.fade-out .ai-chat-popup-welcome-logo .ai-logo svg path {
+  animation: none;
+  stroke-width: 3;
+}
+
+
+.ai-chat-popup .chat-message {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.ai-chat-popup .chat-message.user {
+  flex-direction: row-reverse;
+}
+
+.ai-chat-popup .chat-message.ai {
+  flex-direction: row;
+}
+
+.ai-chat-popup .ai-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ai-chat-popup .ai-avatar.has-shadow {
+  filter: drop-shadow(0 1px 4px rgba(59, 130, 246, 0.3));
+}
+
+.ai-chat-popup .ai-avatar-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.ai-chat-popup .message-content {
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ai-chat-popup .chat-message.user .message-content {
+  align-items: flex-end;
+}
+
+.ai-chat-popup .chat-message.ai .message-content {
+  align-items: flex-start;
+}
+
+.ai-chat-popup .message-text {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.ai-chat-popup .message-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 13px;
+}
+
+.ai-chat-popup .message-text table thead tr {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.ai-chat-popup .message-text table th {
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  font-size: 12px;
+}
+
+.ai-chat-popup .message-text table th:last-child,
+.ai-chat-popup .message-text table td:last-child {
+  text-align: center;
+}
+
+.ai-chat-popup .message-text table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ai-chat-popup .message-text table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.ai-chat-popup .message-text table tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+.ai-chat-popup .message-text table td {
+  padding: 10px;
+  color: #333;
+  font-size: 12px;
+}
+
+.ai-chat-popup .message-content {
+  overflow-x: auto;
+}
+
+.ai-chat-popup .chat-message.user .message-text {
+  background: #3498db;
+  color: #ffffff;
+}
+
+.ai-chat-popup .message-time {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  color: #999;
+}
+
+
+.ai-chat-popup .chat-input-container {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  padding: 8px 12px;
+  gap: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.ai-chat-popup .chat-input-container:focus-within {
+  border-color: #3498db;
+}
+
+.ai-chat-popup .chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #333;
+  padding: 8px 12px;
+}
+
+.ai-chat-popup .chat-input::placeholder {
+  color: #999;
+}
+
+.ai-chat-popup .chat-send-button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #3498db;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.ai-chat-popup .chat-send-button:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+  .ai-chat-popup .chat-send-button:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+  }
+
+  
+  .ai-chat-popup-welcome {
+    padding: 30px 15px;
+    min-height: 150px;
+  }
+
+  .ai-chat-popup-welcome-logo {
+    margin-bottom: 20px;
+  }
+
+  .ai-chat-popup-welcome-logo .ai-logo {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.4));
+  }
+
+  .ai-chat-popup-welcome-logo .ai-logo svg path {
+    stroke-width: 3;
+  }
+
+  .ai-chat-popup-welcome-text {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+
+@media (max-width: 1000px) {
+  
+  .desktop-nav {
+    display: none;
+  }
+
+  .dashboard-section{
+    margin: 0 auto !important;
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .mobile-hamburger-menu {
+    display: flex;
+  }
+  
+  .dashboard-welcome-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #F7F7F7;
+    color: #1e293b;
+    border-radius: 24px;
+    margin-bottom: 20px;
+    padding: 24px;
+    padding-top: 64px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .welcome-hamburger-menu {
+    display: flex;
+  }
+  
+  .welcome-text {
+    padding: 0;
+    width: 100%;
+  }
+  
+  .welcome-title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+  
+  .welcome-label,
+  .welcome-comma,
+  .welcome-username {
+    font-size: clamp(24px, 5vw, 32px);
+    line-height: 1.2;
+  }
+  
+  .welcome-date {
+    font-size: clamp(14px, 3vw, 18px);
+  }
+  
+  .welcome-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  
+  .header-action-icons {
+    display: none;
+  }
+  
+  .sensitive-data-toggle {
+    padding-right: 12px;
+  }
+  
+  .sensitive-data-toggle::after {
+    height: 20px;
+  }
+  
+  .toggle-switch {
+    width: 56px;
+    height: 28px;
+  }
+  
+  .toggle-switch.active .toggle-slider {
+    transform: translateX(28px);
+  }
+  
+  .toggle-slider {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .welcome-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 0px 4px 16px;
+  }
+  
+  .app-logo {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  .dashboard-sidebar {
+    display: none;
+  }
+  
+  .dashboard-main-wrapper {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: clamp(8px, 1.5vw, 15px) clamp(10px, 2vw, 20px);
+    background: #FFFFFF;
+  }
+  
+  .dashboard-section {
+    max-width: 100%;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .dashboard-welcome-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #F7F7F7 !important;
+    color: #1e293b;
+    border-radius: 24px;
+    margin-bottom: 16px;
+    margin-top: 2px;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 24px !important;
+    padding-top: 64px !important;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .welcome-hamburger-menu {
+    display: flex;
+  }
+  
+  .welcome-header-actions {
+    flex-shrink: 0;
+  }
+  
+  .header-action-icons {
+    gap: 8px;
+  }
+  
+  .header-icon-button {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .header-icon-img {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .header-icon-button svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .toggle-switch {
+    width: 56px;
+    height: 28px;
+  }
+  
+  .toggle-switch.active .toggle-slider {
+    transform: translateX(28px);
+  }
+  
+  .toggle-slider {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .welcome-title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0;
+    font-weight: 400;
+  }
+  
+  .welcome-label {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    color: #121212;
+    line-height: 121.055%;
+  }
+  
+  .welcome-comma {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    color: #121212;
+    line-height: 121.055%;
+  }
+  
+  .welcome-username {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    color: #121212;
+    line-height: 121.055%;
+  }
+  
+  .welcome-date {
+    font-size: 24px;
+    color: #757575;
+    font-weight: 400;
+  }
+
+  .loading-dots span {
+    width: 6px;
+    height: 6px;
+  }
+  
+  
+  
+  .dashboard-add-capsule {
+    padding: 20px;
+    background: #f8f9fa;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .dashboard-nearby-pharmacies {
+    padding: 20px;
+    background: #f8f9fa;
+    border: none;
+    box-shadow: none;
+    min-height: 250px;
+  }
+
+  .nearby-pharmacies-title {
+    font-size: 24px;
+  }
+
+  .location-permission-button {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .nearby-pharmacies-content-wrapper {
+    gap: 12px;
+  }
+
+  .pharmacies-list-container {
+    max-height: 300px;
+  }
+
+  .pharmacies-map-container {
+    height: 300px !important;
+  }
+
+  .pharmacy-item {
+    padding: 16px;
+  }
+
+  .pharmacy-name {
+    font-size: 16px;
+  }
+
+  .pharmacy-address {
+    font-size: 13px;
+  }
+
+  .distance-value {
+    font-size: 18px;
+  }
+
+  .dashboard-user-capsule-time {
+    background: #FFFFFF;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .dashboard-medicine-title {
+    font-size: 40px;
+    color: #1e293b;
+    font-weight: 600;
+  }
+  .dashboard-medicine-subtitle {
+    margin-top: -6px;
+    font-size: 16px;
+    color: #64748b;
+    font-weight: 400;
+  }
+  
+  .dashboard-two-colm {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .dashboard-colm-1 {
+    width: 100%;
+    gap: 20px;
+  }
+  
+  .health-stats-cards {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .health-stat-card {
+    padding: 20px;
+    gap: 12px;
+  }
+  
+  .health-stat-value {
+    font-size: 32px;
+  }
+  
+  .health-stat-title span {
+    font-size: 16px;
+  }
+  
+  .interaction-bar-chart {
+    height: 60px;
+    gap: 3px;
+    margin-top: 16px;
+  }
+  
+  .health-stat-bar-container {
+    margin-top: 16px;
+  }
+  
+  .health-stat-status {
+    margin-top: 12px;
+    font-size: 14px;
+  }
+  
+  .dashboard-colm-2 {
+    width: 100%;
+    height: fit-content;
+  }
+  
+  .ai-chat-section {
+    height: calc(100vh - 40px);
+    padding: 24px;
+  }
+  
+  .dashboard-medicine-slider-container {
+    height: 140px;
+
+  }
+
+  
+  .daily-medicine-section {
+    height: 350px;
+    padding: 24px;
+    gap: 20px;
+  }
+  
+  .daily-medicine-list {
+    border-radius: 12px;
+    padding: 12px;
+    padding-bottom: 40px;
+    border: none;
+  }
+  
+  .day-selection {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .day-button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .daily-medicine-list {
+    max-height: 280px;
+  }
+
+  .daily-medicine-list {
+    width: 100% !important;
+    border-radius: 10px;
+    padding: 0px;
+    padding-bottom: 40px;
+    border: 0px solid #e2e8f0;
+    background-color: #FBFCFD;
+  }
+  
+  .daily-medicine-item {
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .daily-medicine-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .medicine-name {
+    font-size: 14px;
+  }
+  
+  .medicine-details {
+    font-size: 12px;
+  }
+  
+  .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    min-height: 0;
+  }
+  
+  .chat-input-container {
+    padding: 12px;
+  }
+  
+  .chat-input {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+  
+  .chat-send-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .dashboard-medicine-track {
+    gap: 15px;
+  }
+  
+  .dashboard-medicine-item {
+    width: 112px;
+    height: 112px;
+    border: 2px solid #cbd5e1;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 36px;
+  }
+  
+  .dashboard-medicine-item:hover {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
+  }
+  
+  .dashboard-add-medicine-button {
+    width: 112px;
+    height: 112px;
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+    border: 2px solid #475569;
+    box-shadow: 0 3px 10px rgba(100, 116, 139, 0.3);
+    border-radius: 36px;
+  }
+  
+  .dashboard-add-medicine-button:hover {
+    background: linear-gradient(135deg, #475569 0%, #334155 100%);
+    border-color: #334155;
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.4);
+  }
+  
+  .dashboard-medicine-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .dashboard-add-medicine-icon svg {
+    width: 42px;
+    height: 42px;
+    color: white;
+  }
+  
+  .day-selection {
+    width: 100%;
+    gap: 8px;
+    padding: 24px 16px !important;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+    border: none;
+    box-shadow: none;
+    justify-content: space-between;
+    border-radius: 48px;
+  }
+  
+  .day-button {
+    width: 54px;
+    height: 62px;
+    border-radius: 24px;
+    font-size: 11px;
+    gap: 2px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+      padding: 6px 10px;
+      font-size: 11px;
+ 
+  }
+  
+  .day-button:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    border-color: #3b82f6;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.15);
+  }
+  
+  .day-button.today {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  }
+  
+  .day-button.selected {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
+    border-color: #3b82f6 !important;
+    color: #1e40af !important;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+  }
+  
+  .day-letter {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .day-date {
+    font-size: 0px !important;
+    font-weight: 500;
+    display: none;
+  }
+  
+  .daily-medicine-item {
+    padding: 24px;
+    gap: 20px;
+    border-radius: 18px;
+    background: #F8F9FA;
+    border: none;
+    box-shadow: none;
+    min-height: 80px;
+  }
+  
+  .daily-medicine-item:hover {
+    background: #F0F4F8;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .daily-medicine-item.completed {
+    background: #F0F4F8;
+    opacity: 0.75;
+  }
+  
+  .daily-medicine-item.completed:hover {
+    background: #E8F0F4;
+    opacity: 0.85;
+  }
+  
+  .daily-medicine-item.completed .medicine-icon-container {
+    background: #D1D5DB !important;
+    opacity: 0.7;
+  }
+  
+  .medicine-icon-container {
+    width: 68px;
+    height: 68px;
+    border-radius: 24px;
+    background: #E5E7EB !important;
+    border: none !important;
+    box-shadow: none;
+  }
+  
+  .medicine-icon-container:hover {
+    background: #D1D5DB;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .daily-medicine-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .daily-medicine-item .medicine-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1A202C;
+  }
+  
+  .daily-medicine-item .medicine-name.completed {
+    font-size: 18px;
+    font-weight: 500;
+    color: #94a3b8;
+  }
+  
+  .daily-medicine-item .medicine-details {
+    font-size: 15px;
+    color: #4A5568;
+    font-weight: 500;
+  }
+  
+  .checkbox {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .checkbox:hover {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.15);
+  }
+  
+  .checkbox.checked {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: #047857;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+  }
+  
+  .ai-chat-section {
+    padding: 24px;
+    height: 70vh;
+    max-height: 600px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ai-chat-header.centered .ai-logo {
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4));
+  }
+  
+  .ai-chat-header.centered .ai-logo svg path {
+    stroke-width: 3.5;
+  }
+  
+  .ai-chat-header.compact .ai-logo {
+    width: 45px;
+    height: 45px;
+    filter: drop-shadow(0 3px 8px rgba(59, 130, 246, 0.3));
+  }
+  
+  .ai-chat-header.compact .ai-logo svg path {
+    stroke-width: 2.5;
+  }
+  
+  .ai-chat-header.centered .ai-chat-title {
+    font-size: 16px;
+    text-align: center;
+    color: #1e293b;
+    font-weight: 500;
+  }
+  
+  .ai-chat-header.compact .ai-chat-title {
+    font-size: 13px;
+    text-align: center;
+    color: #475569;
+    font-weight: 500;
+  }
+
+  .chat-input-container {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .chat-input-container:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  }
+  
+  .chat-input {
+    font-size: 13px;
+    color: #1e293b;
+  }
+  
+  .chat-send-button {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+  
+  .chat-send-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  }
+  
+}
+
+@media (max-width: 489px) {
+  
+  .desktop-nav {
+    display: none;
+  }
+  
+  .mobile-hamburger-menu {
+    display: flex;
+  }
+
+  .dashboard-medicine-name {
+    font-size: 16px;
+  }
+
+  .dashboard-medicine-slider {
+   padding: 10px 0px;
+  }
+  
+  .dashboard-welcome-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #F9FAFC !important;
+    color: #1e293b;
+    border-radius: 0px;
+    margin-bottom: 16px;
+    margin-top: 2px;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 16px 12px !important;
+    padding-top: 56px !important;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .welcome-hamburger-menu {
+    display: flex;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .welcome-hamburger-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .welcome-text {
+    padding: 0;
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .welcome-title {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  
+  .welcome-label,
+  .welcome-comma,
+  .welcome-username {
+    font-size: clamp(20px, 5vw, 28px);
+    line-height: 1.2;
+  }
+  
+  .welcome-date {
+    font-size: clamp(12px, 3vw, 16px);
+  }
+  
+  .welcome-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .header-action-icons {
+    display: none;
+  }
+  
+  .sensitive-data-toggle {
+    padding-right: 8px;
+  }
+  
+  .sensitive-data-toggle::after {
+    height: 18px;
+    width: 1px;
+  }
+  
+  .toggle-switch {
+    width: 48px;
+    height: 24px;
+  }
+  
+  .toggle-switch.active .toggle-slider {
+    transform: translateX(24px);
+  }
+  
+  .toggle-slider {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .toggle-slider svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .welcome-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .app-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 32px;
+  }
+  
+  .dashboard-sidebar {
+    display: none;
+  }
+  
+  .dashboard-main-wrapper {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+    padding-top: clamp(6px, 1.2vw, 12px);
+    padding-bottom: clamp(6px, 1.2vw, 12px);
+    padding-left: clamp(8px, 1.8vw, 16px);
+    padding-right: clamp(8px, 1.8vw, 16px);
+    background: #FFFFFF;
+    box-sizing: border-box;
+  }
+  
+  .dashboard-section {
+    max-width: 100%;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .dashboard-welcome-section {
+    background: #F7F7F7;
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+  }
+  
+  .welcome-title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0;
+    font-weight: 400;
+  }
+  
+  .welcome-label {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    color: #121212;
+    line-height: 121.055%;
+  }
+  
+  .welcome-comma {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    color: #121212;
+    line-height: 121.055%;
+  }
+  
+  .welcome-username {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    color: #121212;
+    line-height: 121.055%;
+  }
+  
+  .welcome-date {
+    font-size: 24px;
+    color: #757575;
+    font-weight: 400;
+  }
+
+  .loading-dots span {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .dashboard-add-capsule {
+    padding: 20px;
+    background: #f8f9fa;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .dashboard-nearby-pharmacies {
+    padding: 16px !important;
+    background: #f8f9fa;
+    border: none;
+    box-shadow: none;
+    min-height: 200px;
+  }
+
+  .nearby-pharmacies-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nearby-pharmacies-title {
+    font-size: 28px;
+  }
+
+  .location-permission-button {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .nearby-pharmacies-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .pharmacies-header-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .view-mode-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .view-mode-button {
+    flex: 1;
+  }
+
+  .location-permission-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nearby-pharmacies-content-wrapper {
+    gap: 12px;
+  }
+
+  .pharmacies-list-container {
+    max-height: 250px;
+  }
+
+  .pharmacies-map-container {
+    height: 250px !important;
+  }
+
+  .pharmacy-item {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .pharmacy-distance {
+    border-left: none;
+    border-top: none;
+    padding-left: 0;
+    padding-top: 12px;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+
+  .pharmacy-name {
+    font-size: 16px;
+  }
+
+  .pharmacy-address {
+    font-size: 13px;
+  }
+
+  .distance-value {
+    font-size: 18px;
+  }
+
+  .dashboard-user-capsule-time {
+    background: #FFFFFF;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .dashboard-medicine-title {
+    font-size: 40px;
+    color: #1e293b;
+    font-weight: 600;
+  }
+  
+  .dashboard-medicine-subtitle {
+    margin-top: -6px;
+    font-size: 16px;
+    color: #64748b;
+    font-weight: 400;
+  }
+  
+  .dashboard-medicine-slider-container {
+    height: auto !important;
+   padding: 0px 0px 20px 0px;
+  }
+  
+  .dashboard-medicine-track {
+    gap: 12px;
+  }
+  
+  .dashboard-medicine-item {
+    width: 112px;
+    height: 112px;
+  
+    border: 2px solid #cbd5e1;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 36px;
+  }
+  
+  .dashboard-medicine-item:hover {
+    border-color: #3b82f6;
+  
+    box-shadow: 0 5px 16px rgba(59, 130, 246, 0.25);
+  }
+  
+  .dashboard-add-medicine-button {
+    width: 112px;
+    height: 112px;
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+    border: 2px solid #475569;
+    box-shadow: 0 3px 10px rgba(100, 116, 139, 0.3);
+    border-radius: 36px;
+  }
+  
+  .dashboard-add-medicine-button:hover {
+    background: linear-gradient(135deg, #475569 0%, #334155 100%);
+    border-color: #334155;
+    box-shadow: 0 5px 16px rgba(71, 85, 105, 0.4);
+  }
+  
+  .dashboard-medicine-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .dashboard-add-medicine-icon svg {
+    width: 42px;
+    height: 42px;
+    color: white;
+  }
+  
+  .day-selection {
+    width: 100%;
+    gap: 8px;
+    padding: 24px 16px !important;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+    border: none;
+    box-shadow: none;
+    justify-content: space-between;
+    border-radius: 48px;
+  }
+  
+  .day-button {
+    width: 54px;
+    height: 62px;
+    border-radius: 24px;
+    font-size: 11px;
+    gap: 2px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+      padding: 6px 10px;
+      font-size: 11px;
+ 
+  }
+  
+  .day-button:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    border-color: #3b82f6;
+    box-shadow: 0 3px 6px rgba(59, 130, 246, 0.15);
+  }
+  
+  .day-button.today {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 3px 10px rgba(59, 130, 246, 0.4) !important;
+  }
+  
+  .day-button.selected {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
+    border-color: #3b82f6 !important;
+    color: #1e40af !important;
+    box-shadow: 0 3px 6px rgba(59, 130, 246, 0.2);
+  }
+  
+  .day-letter {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .day-date {
+    font-size: 10px;
+    display: none;
+    font-weight: 500;
+  }
+  
+  .daily-medicine-item {
+    padding: 20px;
+    gap: 16px;
+    border-radius: 16px;
+    background: #F8F9FA;
+    border: none;
+    box-shadow: none;
+    min-height: 70px;
+  }
+  
+  .daily-medicine-item:hover {
+    background: #F0F4F8;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .daily-medicine-item.completed {
+    background: #F0F4F8;
+    opacity: 0.75;
+  }
+  
+  .daily-medicine-item.completed:hover {
+    background: #E8F0F4;
+    opacity: 0.85;
+  }
+  
+  .daily-medicine-item.completed .medicine-icon-container {
+    background: #D1D5DB !important;
+    opacity: 0.7;
+  }
+  
+  .medicine-icon-container {
+    width: 68px;
+    height: 68px;
+    border-radius: 24px;
+    background: #E5E7EB !important;
+    border: none !important;
+    box-shadow: none;
+  }
+  
+  .medicine-icon-container:hover {
+    background: #D1D5DB;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .daily-medicine-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .daily-medicine-item .medicine-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1A202C;
+  }
+  
+  .daily-medicine-item .medicine-name.completed {
+    font-size: 16px;
+    font-weight: 500;
+    color: #94a3b8;
+  }
+  
+  .daily-medicine-item .medicine-details {
+    font-size: 14px;
+    color: #4A5568;
+    font-weight: 500;
+  }
+  
+  .checkbox {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    border: 2px solid #cbd5e1;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .checkbox:hover {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.15);
+  }
+  
+  .checkbox.checked {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: #047857;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+  }
+  
+  .ai-chat-section {
+    padding: 15px;
+    height: 60vh;
+    max-height: 500px;
+    position: relative;
+    top: 0;
+  }
+  
+  .ai-chat-header.centered .ai-logo {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.2));
+  }
+  
+  .ai-chat-header.centered .ai-logo svg path {
+    stroke-width: 3;
+  }
+  
+  .ai-chat-header.compact .ai-logo {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 1px 2px rgba(59, 130, 246, 0.1));
+  }
+
+  .dashboard-medicine-remove-button {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+
+  }
+  
+  .ai-chat-header.compact .ai-logo svg path {
+    stroke-width: 2;
+  }
+  
+  .ai-chat-header.centered .ai-chat-title {
+    font-size: 15px;
+    text-align: center;
+  }
+  
+  .ai-chat-header.compact .ai-chat-title {
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  .message-text {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .chat-input {
+    font-size: 12px;
+  }
+  
+  .chat-send-button {
+    width: 30px;
+    height: 30px;
+  }
+  
+  
+  .dashboard-two-colm {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .dashboard-colm-1 {
+    width: 100%;
+    gap: 15px;
+  }
+  
+  .health-stats-cards {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .health-stat-card {
+    padding: 18px;
+    gap: 10px;
+  }
+  
+  .health-stat-value {
+    font-size: 28px;
+  }
+  
+  .health-stat-title span {
+    font-size: 15px;
+  }
+  
+  .interaction-bar-chart {
+    height: 50px;
+    gap: 2px;
+    margin-top: 12px;
+  }
+  
+  .health-stat-bar-container {
+    margin-top: 12px;
+  }
+  
+  .health-stat-status {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  
+  .dashboard-colm-2 {
+    width: 100%;
+    height: fit-content;
+  }
+  
+  .ai-chat-section {
+    height: calc(100vh - 40px);
+    padding: 15px;
+  }
+  
+  .dashboard-medicine-slider-container {
+    height: 100px;
+  }
+  
+  .daily-medicine-section {
+    height: 100%;
+    padding: 20px;
+    gap: 16px;
+  }
+  
+  .daily-medicine-list {
+    width: 100% !important;
+    border-radius: 10px;
+    padding: 0px;
+    padding-bottom: 40px;
+    border: 0px solid #e2e8f0;
+    background-color: #FBFCFD;
+  }
+  
+  .day-selection {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .day-button {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+
+  
+  .daily-medicine-item {
+    padding: 20px 12px;
+    margin-bottom: 6px;
+  }
+  
+  .daily-medicine-icon {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .medicine-name {
+    font-size: 13px;
+  }
+  
+  .medicine-details {
+    font-size: 11px;
+  }
+  
+  .checkbox {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    min-height: 0;
+  }
+  
+  .chat-input-container {
+    padding: 10px;
+  }
+  
+  .chat-input {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  
+  .chat-send-button {
+    width: 30px;
+    height: 30px;
+  }
+  
+}
+
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.dashboard-medicine-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 120px;
+}
+
+.medicine-loading-spinner {
+  margin-bottom: 12px;
+}
+
+.medicine-loading-text {
+  font-size: 14px;
+  color: #666;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+}
+
+
+.taken-time {
+  font-size: 12px;
+  color: #4CAF50;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+
+.dashboard-add-medicine-button.processing {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.dashboard-add-medicine-button.processing .dashboard-add-medicine-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.checkbox {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.checkbox:disabled:hover {
+  background-color: #f5f5f5;
+}
+
+
+
+.medicine-checkbox {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.medicine-checkbox:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+
+.location-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-in-out;
+  padding: 20px;
+}
+
+.location-confirm-modal {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.location-confirm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.location-confirm-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.location-confirm-close {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  color: #666;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.location-confirm-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
+  transform: scale(1.05);
+}
+
+.location-confirm-content {
+  padding: 24px 28px;
+  background: rgba(255, 255, 255, 0.3);
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.location-confirm-map-preview {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #e9ecef;
+}
+
+.location-confirm-address {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.location-confirm-address svg {
+  color: #0466E0;
+  flex-shrink: 0;
+}
+
+.location-confirm-coordinates {
+  padding: 8px 12px;
+  background: #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: #7f8c8d;
+  text-align: center;
+}
+
+.location-confirm-message {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.location-confirm-message p {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #4a4a4a;
+  margin: 0;
+  font-weight: 400;
+}
+
+.location-confirm-actions {
+  display: flex;
+  gap: 12px;
+  padding: 20px 28px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.location-confirm-button {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.location-confirm-button-cancel {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.location-confirm-button-cancel:hover {
+  background: #e2e8f0;
+  color: #475569;
+  transform: translateY(-1px);
+}
+
+.location-confirm-button-confirm {
+  background: #0466E0;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(4, 102, 224, 0.3);
+}
+
+.location-confirm-button-confirm:hover {
+  background: #0466E0;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(4, 102, 224, 0.4);
+  opacity: 0.9;
+}
+
+.location-confirm-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  .location-confirm-modal {
+    max-width: 95%;
+    margin: 10px;
+  }
+
+  .location-confirm-header {
+    padding: 20px;
+  }
+
+  .location-confirm-content {
+    padding: 20px;
+  }
+
+  .location-confirm-map-preview {
+    margin-bottom: 12px;
+  }
+
+  .location-confirm-actions {
+    flex-direction: column;
+    padding: 16px 20px;
+    flex-shrink: 0;
+  }
+
+  .location-confirm-button {
+    width: 100%;
+  }
+}
+
+
+.feature-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.feature-popup {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  max-width: 420px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.feature-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.feature-popup-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.feature-popup-close {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  color: #666;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-popup-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
+  transform: scale(1.05);
+}
+
+.feature-popup-content {
+  padding: 32px 28px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.feature-popup-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: #007bff;
+  filter: drop-shadow(0 2px 4px rgba(0, 123, 255, 0.2));
+}
+
+.feature-popup-message {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #4a4a4a;
+  margin: 0 0 28px 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.feature-popup-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-width: 140px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-popup-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.feature-popup-button:hover {
+
+  transform: translateY(-2px);
+
+}
+
+.feature-popup-button:hover::before {
+  left: 100%;
+}
+
+.feature-popup-button:active {
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .dashboard-colm-2 {
+    display: none;
+  }
+  
+  .ai-chat-floating-button {
+    display: flex;
+    
+    bottom: max(20px, env(safe-area-inset-bottom, 20px));
+    right: max(20px, env(safe-area-inset-right, 20px));
+    
+    position: fixed;
+    z-index: 9999;
+    
+    contain: layout style paint;
+    touch-action: manipulation;
+  }
+  
+  .dashboard-colm-1 {
+    width: 100%;
+  }
+  
+  .dashboard-two-colm {
+    flex-direction: column;
+  }
+}
+
+
+.already-consulted-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 100px;
+  z-index: 10000;
+  pointer-events: none;
+  animation: popupFadeIn 0.4s ease;
+}
+
+.already-consulted-popup-content {
+  background: rgba(251, 146, 60, 0.4);
+  backdrop-filter: blur(60px) saturate(200%);
+  -webkit-backdrop-filter: blur(60px) saturate(200%);
+  border: 2px solid rgba(251, 146, 60, 0.7);
+  border-radius: 32px;
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 
+    0 25px 80px rgba(251, 146, 60, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 2px 0 rgba(255, 255, 255, 0.7) inset,
+    0 0 40px rgba(251, 146, 60, 0.4);
+  animation: popupSlideDownBounce 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center top;
+  min-width: 320px;
+  justify-content: center;
+  position: relative;
+}
+
+.already-consulted-popup-content::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.8), rgba(234, 88, 12, 0.6));
+  border-radius: 32px;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(8px);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.already-consulted-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ea580c;
+  flex-shrink: 0;
+  animation: iconPulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(234, 88, 12, 0.4));
+}
+
+.already-consulted-text {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #9a3412;
+  margin: 0;
+  text-shadow: 
+    0 1px 3px rgba(255, 255, 255, 0.8),
+    0 2px 6px rgba(154, 52, 18, 0.2);
+  letter-spacing: 0.3px;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popupSlideDownBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(10px) scale(1.05);
+  }
+  80% {
+    transform: translateY(-5px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.9;
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+
+.notification-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #e74c3c;
+  color: white;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 5px;
+  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.4);
+  z-index: 1;
+}
+
+
+.notification-button-wrapper {
+  position: relative;
+}
+
+
+.notifications-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 380px;
+  max-height: 500px;
+  background: #FFFFFF;
+  border: 1px solid #E9ECEF;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.notifications-dropdown.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+
+.notifications-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  transform: rotate(45deg);
+  border-top: 1px solid #E9ECEF;
+  border-left: 1px solid #E9ECEF;
+  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.notifications-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E9ECEF;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.notifications-dropdown-title {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2F2F2F;
+  margin: 0;
+}
+
+.notifications-dropdown-close {
+  background: #F7F7F7;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #66747F;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.notifications-dropdown-close:hover {
+  background: #E9ECEF;
+  color: #2F2F2F;
+  transform: scale(1.05);
+}
+
+.notifications-dropdown-content {
+  max-height: 440px;
+  overflow-y: auto;
+  padding: 8px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 16px;
+  position: relative;
+  background: transparent;
+  margin: 2px 0;
+}
+
+.notification-item:hover {
+  background: #F7F7F7;
+}
+
+.notification-item.unread {
+  background: #F0F7FF;
+}
+
+.notification-item.unread:hover {
+  background: #E5F0FF;
+}
+
+.notification-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notification-message {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2F2F2F;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.notification-time {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #66747F;
+  margin-top: 4px;
+}
+
+.notification-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0466E0;
+  flex-shrink: 0;
+}
+
+.notification-delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #66747F;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.notification-delete-btn:hover {
+  background: #FEE2E2;
+  color: #DC2626;
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.notification-item:hover .notification-delete-btn {
+  opacity: 0.8;
+}
+
+.notification-empty {
+  padding: 40px 20px;
+  text-align: center;
+  background: transparent;
+}
+
+.notification-empty p {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #66747F;
+  margin: 0;
+}
+
+
+.notifications-dropdown-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.notifications-dropdown-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.notifications-dropdown-content::-webkit-scrollbar-thumb {
+  background: #E9ECEF;
+  border-radius: 2px;
+}
+
+.notifications-dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: #D1D5DB;
+}
+
+
+@media (max-width: 768px) {
+  .notifications-dropdown {
+    width: calc(100vw - 40px);
+    right: -10px;
+    max-height: 60vh;
+  }
+
+  .notifications-dropdown-header {
+    padding: 12px 16px;
+  }
+
+  .notifications-dropdown-title {
+    font-size: 16px;
+  }
+
+  .notification-item {
+    padding: 10px 16px;
+  }
+
+  .notification-message {
+    font-size: 13px;
+  }
+
+  .notification-time {
+    font-size: 11px;
+  }
+}
+
+
+.profile-button-wrapper {
+  position: relative;
+}
+
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 200px;
+  background: #FFFFFF;
+  border: 1px solid #E9ECEF;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.profile-dropdown.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+
+.profile-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  transform: rotate(45deg);
+  border-top: 1px solid #E9ECEF;
+  border-left: 1px solid #E9ECEF;
+  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.profile-dropdown-content {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.profile-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2F2F2F;
+  text-align: left;
+  width: 100%;
+}
+
+.profile-dropdown-item:hover {
+  background: #F7F7F7;
+}
+
+.profile-dropdown-item svg {
+  color: #66747F;
+  flex-shrink: 0;
+}
+
+.profile-dropdown-item:hover svg {
+  color: #2F2F2F;
+}
+
+.profile-dropdown-item-logout {
+  color: #E29595;
+}
+
+.profile-dropdown-item-logout:hover {
+  background: #FDF2F2;
+  color: #C85A5A;
+}
+
+.profile-dropdown-item-logout svg {
+  color: #E29595;
+}
+
+.profile-dropdown-item-logout:hover svg {
+  color: #C85A5A;
+}
+
+.profile-dropdown-divider {
+  height: 1px;
+  background: #E9ECEF;
+  margin: 4px 8px;
+}
+
+
+@media (max-width: 768px) {
+  .profile-dropdown {
+    width: 180px;
+    right: -10px;
+  }
+
+  .profile-dropdown-item {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}
+
+
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.settings-modal {
+  background: #FFFFFF;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+
+.settings-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.settings-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-modal::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.settings-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid #E9ECEF;
+  background: #FFFFFF;
+}
+
+.settings-modal-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #2F2F2F;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.settings-modal-close {
+  background: #F7F7F7;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  color: #66747F;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-modal-close:hover {
+  background: #E9ECEF;
+  color: #2F2F2F;
+  transform: scale(1.05);
+}
+
+.settings-modal-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #FFFFFF;
+}
+
+.settings-modal-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.settings-modal-item:hover {
+  background: #F7F7F7;
+}
+
+.settings-modal-item-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7F7F7;
+  border-radius: 12px;
+  color: #66747F;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.settings-modal-item-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.settings-modal-item:hover .settings-modal-item-icon {
+  background: #E9ECEF;
+  color: #2F2F2F;
+}
+
+.settings-modal-item-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-modal-item-title {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2F2F2F;
+  line-height: 1.4;
+}
+
+.settings-modal-item-arrow {
+  color: #66747F;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.settings-modal-item:hover .settings-modal-item-arrow {
+  color: #2F2F2F;
+  transform: translateX(4px);
+}
+
+
+@media (max-width: 768px) {
+  .settings-modal {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .settings-modal-header {
+    padding: 20px 24px;
+  }
+
+  .settings-modal-title {
+    font-size: 20px;
+  }
+
+  .settings-modal-content {
+    padding: 12px;
+  }
+
+  .settings-modal-item {
+    padding: 14px 16px;
+  }
+
+  .settings-modal-item-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .settings-modal-item-title {
+    font-size: 15px;
+  }
+}
+
+
+.weight-height-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.weight-height-modal {
+  background: #FFFFFF;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.weight-height-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.weight-height-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.weight-height-modal::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.weight-height-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid #E9ECEF;
+  background: #FFFFFF;
+}
+
+.weight-height-modal-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #2F2F2F;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.weight-height-modal-close {
+  background: #F7F7F7;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  color: #66747F;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weight-height-modal-close:hover {
+  background: #E9ECEF;
+  color: #2F2F2F;
+  transform: scale(1.05);
+}
+
+.weight-height-modal-content {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #FFFFFF;
+}
+
+.weight-height-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.weight-height-label {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #66747F;
+}
+
+.weight-height-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #2F2F2F;
+  background: #FFFFFF;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.weight-height-input:focus {
+  outline: none;
+  border-color: #0466E0;
+  box-shadow: 0 0 0 3px rgba(4, 102, 224, 0.1);
+}
+
+.weight-height-input::placeholder {
+  color: #C8D7E3;
+}
+
+.weight-height-change {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #66747F;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+.weight-height-modal-footer {
+  padding: 20px 28px 28px;
+  border-top: 1px solid #E9ECEF;
+  background: #FFFFFF;
+}
+
+.weight-height-save-button {
+  width: 100%;
+  background: #0466E0;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.weight-height-save-button:hover:not(:disabled) {
+  background: #0355C7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(4, 102, 224, 0.3);
+}
+
+.weight-height-save-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.weight-height-save-button:disabled {
+  background: #E9ECEF;
+  color: #C8D7E3;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+
+@media (max-width: 768px) {
+  .weight-height-modal {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .weight-height-modal-header {
+    padding: 20px 24px;
+  }
+
+  .weight-height-modal-title {
+    font-size: 20px;
+  }
+
+  .weight-height-modal-content {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .weight-height-input {
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+
+  .weight-height-modal-footer {
+    padding: 16px 24px 24px;
+  }
+
+  .weight-height-save-button {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+}
+
+
+.side-effect-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.side-effect-modal {
+  background: #FFFFFF;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.side-effect-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.side-effect-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.side-effect-modal::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.side-effect-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid #E9ECEF;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.side-effect-modal-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #2F2F2F;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.side-effect-modal-close {
+  background: #F7F7F7;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  color: #66747F;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.side-effect-modal-close:hover {
+  background: #E9ECEF;
+  color: #2F2F2F;
+  transform: scale(1.05);
+}
+
+.side-effect-modal-content {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: #FFFFFF;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.side-effect-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.side-effect-section-label {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2F2F2F;
+}
+
+.side-effect-medicine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.side-effect-medicine-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #F7F7F7;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.side-effect-medicine-item:hover {
+  background: #F0F0F0;
+  border-color: #D1D5DB;
+}
+
+.side-effect-medicine-item.selected {
+  background: #E8F0FE;
+  border-color: #0466E0;
+}
+
+.side-effect-medicine-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.side-effect-medicine-name {
+  flex: 1;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2F2F2F;
+  text-align: left;
+}
+
+.side-effect-check-icon {
+  color: #0466E0;
+  flex-shrink: 0;
+}
+
+.side-effect-severity-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.side-effect-severity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #F7F7F7;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2F2F2F;
+}
+
+.side-effect-severity-item:hover {
+  background: #F0F0F0;
+  border-color: #D1D5DB;
+}
+
+.side-effect-severity-item.selected {
+  background: #E8F0FE;
+  border-color: #0466E0;
+  color: #0466E0;
+}
+
+.side-effect-options-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.side-effect-option-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: #F7F7F7;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2F2F2F;
+  text-align: left;
+}
+
+.side-effect-option-item:hover {
+  background: #F0F0F0;
+  border-color: #D1D5DB;
+}
+
+.side-effect-option-item.selected {
+  background: #E8F0FE;
+  border-color: #0466E0;
+  color: #0466E0;
+}
+
+.side-effect-empty {
+  padding: 40px 20px;
+  text-align: center;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #66747F;
+}
+
+.side-effect-modal-footer {
+  padding: 20px 28px 28px;
+  border-top: 1px solid #E9ECEF;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.side-effect-save-button {
+  width: 100%;
+  background: #0466E0;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.side-effect-save-button:hover:not(:disabled) {
+  background: #0355C7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(4, 102, 224, 0.3);
+}
+
+.side-effect-save-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.side-effect-save-button:disabled {
+  background: #E9ECEF;
+  color: #C8D7E3;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+
+@media (max-width: 768px) {
+  .side-effect-modal {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .side-effect-modal-header {
+    padding: 20px 24px;
+  }
+
+  .side-effect-modal-title {
+    font-size: 20px;
+  }
+
+  .side-effect-modal-content {
+    padding: 24px;
+    gap: 24px;
+  }
+
+  .side-effect-severity-list,
+  .side-effect-options-list {
+    grid-template-columns: 1fr;
+  }
+
+  .side-effect-modal-footer {
+    padding: 16px 24px 24px;
+  }
+
+  .side-effect-save-button {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+}
+
+
+.side-effect-list-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.side-effect-list-modal {
+  background: #FFFFFF;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  min-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+  animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.side-effect-list-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.side-effect-list-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.side-effect-list-modal::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.side-effect-list-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid #E9ECEF;
+  background: #FFFFFF;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.side-effect-list-modal-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #2F2F2F;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.side-effect-list-modal-close {
+  background: #F7F7F7;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  color: #66747F;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.side-effect-list-modal-close:hover {
+  background: #E9ECEF;
+  color: #2F2F2F;
+  transform: scale(1.05);
+}
+
+.side-effect-list-modal-content {
+  padding: 28px;
+  background: #FFFFFF;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 300px;
+  position: relative;
+}
+
+.side-effect-list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #66747F;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+}
+
+.side-effect-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.side-effect-list-item {
+  background: #F8F9FA;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid #E9ECEF;
+}
+
+.side-effect-list-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.side-effect-list-item-medicine {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.side-effect-list-medicine-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.side-effect-list-medicine-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.side-effect-list-medicine-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2F2F2F;
+  margin-bottom: 4px;
+}
+
+.side-effect-list-item-date {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #66747F;
+}
+
+.side-effect-list-severity-badge {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.side-effect-list-item-effects {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #E9ECEF;
+}
+
+.side-effect-list-effects-label {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #66747F;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.side-effect-list-effects-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.side-effect-list-effect-tag {
+  background: #FFFFFF;
+  border: 1px solid #E9ECEF;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #2F2F2F;
+}
+
+@media (max-width: 768px) {
+  .side-effect-list-modal {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .side-effect-list-modal-header {
+    padding: 20px 24px;
+  }
+
+  .side-effect-list-modal-title {
+    font-size: 20px;
+  }
+
+  .side-effect-list-modal-content {
+    padding: 20px;
+  }
+
+  .side-effect-list-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .side-effect-list-severity-badge {
+    align-self: flex-start;
+  }
+}
+
+
+.extra-health-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.extra-health-modal {
+  background: #FFFFFF;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.extra-health-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.extra-health-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.extra-health-modal::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.extra-health-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid #E9ECEF;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.extra-health-modal-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #2F2F2F;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.extra-health-modal-close {
+  background: #F7F7F7;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  color: #66747F;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.extra-health-modal-close:hover {
+  background: #E9ECEF;
+  color: #2F2F2F;
+  transform: scale(1.05);
+}
+
+.extra-health-modal-content {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #FFFFFF;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.extra-health-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.extra-health-label {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2F2F2F;
+}
+
+.extra-health-input,
+.extra-health-select,
+.extra-health-textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #2F2F2F;
+  background: #FFFFFF;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.extra-health-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+}
+
+.extra-health-input:focus,
+.extra-health-select:focus,
+.extra-health-textarea:focus {
+  outline: none;
+  border-color: #0466E0;
+  box-shadow: 0 0 0 3px rgba(4, 102, 224, 0.1);
+}
+
+.extra-health-select {
+  cursor: pointer;
+}
+
+.extra-health-toggle-group {
+  display: flex;
+  gap: 12px;
+}
+
+.extra-health-toggle {
+  flex: 1;
+  padding: 14px 20px;
+  background: #F7F7F7;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #66747F;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.extra-health-toggle:hover {
+  background: #F0F0F0;
+  border-color: #D1D5DB;
+}
+
+.extra-health-toggle.active {
+  background: #E8F0FE;
+  border-color: #0466E0;
+  color: #0466E0;
+}
+
+.extra-health-nested-field {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.extra-health-select-small {
+  flex: 0 0 120px;
+  padding: 14px 18px;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #2F2F2F;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.extra-health-select-small:focus {
+  outline: none;
+  border-color: #0466E0;
+  box-shadow: 0 0 0 3px rgba(4, 102, 224, 0.1);
+}
+
+.extra-health-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.extra-health-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #F7F7F7;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+}
+
+.extra-health-list-item span {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2F2F2F;
+  flex: 1;
+}
+
+.extra-health-remove-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #E29595;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.extra-health-remove-btn:hover {
+  background: #FDF2F2;
+  color: #C85A5A;
+}
+
+.extra-health-add-container {
+  display: flex;
+  gap: 12px;
+}
+
+.extra-health-add-container .extra-health-input {
+  flex: 1;
+}
+
+.extra-health-add-btn {
+  flex: 0 0 48px;
+  height: 48px;
+  background: #0466E0;
+  border: none;
+  border-radius: 16px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.extra-health-add-btn:hover {
+  background: #0355C7;
+  transform: scale(1.05);
+}
+
+.extra-health-contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #F7F7F7;
+  border: 2px solid #E9ECEF;
+  border-radius: 16px;
+  gap: 12px;
+}
+
+.extra-health-contact-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.extra-health-contact-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2F2F2F;
+}
+
+.extra-health-contact-phone {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #66747F;
+}
+
+.extra-health-contact-relationship {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #9695E2;
+}
+
+.extra-health-contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.extra-health-contact-form .extra-health-input {
+  margin: 0;
+}
+
+.extra-health-contact-form .extra-health-add-btn {
+  height: 48px;
+  width: 48px;
+}
+
+.extra-health-modal-footer {
+  padding: 20px 28px 28px;
+  border-top: 1px solid #E9ECEF;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.extra-health-save-button {
+  width: 100%;
+  background: #0466E0;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.extra-health-save-button:hover:not(:disabled) {
+  background: #0355C7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(4, 102, 224, 0.3);
+}
+
+.extra-health-save-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.extra-health-save-button:disabled {
+  background: #E9ECEF;
+  color: #C8D7E3;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+
+@media (max-width: 768px) {
+  .extra-health-modal {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .extra-health-modal-header {
+    padding: 20px 24px;
+  }
+
+  .extra-health-modal-title {
+    font-size: 20px;
+  }
+
+  .extra-health-modal-content {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .extra-health-toggle-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .extra-health-contact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .extra-health-contact-form .extra-health-add-btn {
+    width: 100%;
+  }
+
+  .extra-health-modal-footer {
+    padding: 16px 24px 24px;
+  }
+
+  .extra-health-save-button {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+}
+
+
+.medicine-time-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.medicine-time-popup-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  max-width: 360px;
+  width: 100%;
+  position: relative;
+  pointer-events: auto;
+  animation: slideInFromCenter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid #e5e7eb;
+}
+
+@keyframes slideInFromCenter {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.medicine-time-popup-header {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: row; 
+}
+
+.medicine-time-popup-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+
+.medicine-time-popup-close:hover {
+  color: #374151;
+}
+
+.medicine-time-popup-mute {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0466E0;
+  transition: all 0.2s ease;
+}
+
+.medicine-time-popup-mute:hover {
+  color: #0354b8;
+  transform: scale(1.1);
+}
+
+.medicine-time-popup-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.medicine-time-popup-icon-img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.medicine-time-popup-title {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.medicine-time-popup-medicine-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0466E0;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.medicine-time-popup-time {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.medicine-time-popup-dosage {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+.medicine-time-popup-button {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #0466E0 0%, #0354b8 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(4, 102, 224, 0.3);
+}
+
+.medicine-time-popup-button:hover {
+  background: linear-gradient(135deg, #0354b8 0%, #0243a0 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(4, 102, 224, 0.4);
+}
+
+.medicine-time-popup-button:active {
+  transform: translateY(0);
+}
+
+
+@media (max-width: 768px) {
+  .medicine-time-popup {
+    padding: 16px;
+    align-items: center;
+  }
+
+  .medicine-time-popup-content {
+    max-width: 100%;
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .medicine-time-popup-title {
+    font-size: 18px;
+  }
+
+  .medicine-time-popup-medicine-name {
+    font-size: 16px;
+  }
+}
+
+
+.health-card-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.health-card-modal {
+  background: #FFFFFF;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  min-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+  animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.health-card-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.health-card-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid #E9ECEF;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.health-card-modal-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #2F2F2F;
+  margin: 0;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.health-card-modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.health-card-modal-share {
+  background: #0466E0;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 12px;
+  color: #FFFFFF;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.health-card-modal-share:hover {
+  background: #0353B3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(4, 102, 224, 0.3);
+}
+
+.health-card-modal-share:active {
+  transform: translateY(0);
+}
+
+.health-card-modal-share svg {
+  flex-shrink: 0;
+}
+
+.health-card-modal-close {
+  background: #F7F7F7;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  color: #66747F;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.health-card-modal-close:hover {
+  background: #E9ECEF;
+  color: #2F2F2F;
+  transform: scale(1.05);
+}
+
+.health-card-modal-content {
+  padding: 28px;
+  background: #FFFFFF;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 300px;
+}
+
+
+.health-card-id {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 20px;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.health-card-id-header {
+  background: linear-gradient(135deg, #57a6da 0%, #4a95c8 100%);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+}
+
+.health-card-id-logo {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.health-card-id-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.health-card-id-title {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.health-card-id-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.health-card-id-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.health-card-id-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.health-card-id-label {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #66747F;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.health-card-id-value {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2F2F2F;
+  line-height: 1.5;
+}
+
+.health-card-note-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.health-card-medicines-list,
+.health-card-diseases-list,
+.health-card-surgeries-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.health-card-medicine-tag,
+.health-card-disease-tag,
+.health-card-surgery-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #E8F0FE;
+  color: #0466E0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.health-card-contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.health-card-contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.health-card-contact-name {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2F2F2F;
+}
+
+.health-card-contact-phone {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0466E0;
+}
+
+.health-card-contact-relation {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #66747F;
+}
+
+.health-card-id-footer {
+  background: #f8f9fa;
+  padding: 16px 24px;
+  text-align: center;
+  border-top: 1px solid #e9ecef;
+}
+
+.health-card-id-note {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #66747F;
+  font-style: italic;
+}
+
+
+@media (max-width: 768px) {
+  .health-card-modal {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .health-card-modal-header {
+    padding: 20px 24px;
+  }
+
+  .health-card-modal-title {
+    font-size: 20px;
+  }
+
+  .health-card-modal-share {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .health-card-modal-share span {
+    display: none;
+  }
+
+  .health-card-modal-content {
+    padding: 20px;
+  }
+
+  .health-card-id-header {
+    padding: 20px;
+  }
+
+  .health-card-id-body {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .health-card-id-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .health-card-id-title {
+    font-size: 18px;
+  }
+}
+
+

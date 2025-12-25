@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SMTIA.WebAPI.Abstractions
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public abstract class ApiController : ControllerBase
     {

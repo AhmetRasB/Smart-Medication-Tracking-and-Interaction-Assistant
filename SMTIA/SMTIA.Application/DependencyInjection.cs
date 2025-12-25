@@ -22,6 +22,9 @@ namespace SMTIA.Application
             // Register schedule timing service
             services.AddScoped<IScheduleTimingService, ScheduleTimingService>();
 
+            // Register prompt service
+            services.AddScoped<IPromptService, PromptService>();
+
             return services;
         }
     }

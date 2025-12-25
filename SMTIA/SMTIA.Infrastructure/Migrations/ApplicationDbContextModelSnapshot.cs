@@ -161,9 +161,21 @@ namespace SMTIA.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("AcilNot")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BirthCity")
+                        .HasColumnType("text");
+
                     b.Property<string>("BloodType")
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)");
+
+                    b.Property<int?>("CigarettesPerDay")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CigarettesUnit")
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -171,6 +183,9 @@ namespace SMTIA.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool?>("DrinksAlcohol")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -182,6 +197,18 @@ namespace SMTIA.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("HadCovid")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Handedness")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("HeightCm")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -217,6 +244,12 @@ namespace SMTIA.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("Smokes")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("TcIdentityNo")
                         .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -363,6 +396,68 @@ namespace SMTIA.Infrastructure.Migrations
                     b.ToTable("IntakeLogs", (string)null);
                 });
 
+            modelBuilder.Entity("SMTIA.Domain.Entities.InteractionAnalysis", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AllergiesJson")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DetailedAnalysis")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ExistingMedicinesJson")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<Guid?>("NewMedicineId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("NewMedicineName")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("RawAiResponse")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Recommendations")
+                        .HasColumnType("text");
+
+                    b.Property<int>("RiskLevel")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewMedicineId");
+
+                    b.HasIndex("RiskLevel");
+
+                    b.HasIndex("UserId", "CreatedAt");
+
+                    b.ToTable("InteractionAnalyses", (string)null);
+                });
+
             modelBuilder.Entity("SMTIA.Domain.Entities.MedicationSchedule", b =>
                 {
                     b.Property<Guid>("Id")
@@ -462,6 +557,66 @@ namespace SMTIA.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Medicines", (string)null);
+                });
+
+            modelBuilder.Entity("SMTIA.Domain.Entities.MedicineMapping", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ActiveIngredientEn")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("ActiveIngredientTr")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("BrandNameTr")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<decimal>("Confidence")
+                        .HasColumnType("decimal(5,4)");
+
+                    b.Property<Guid?>("ConfirmedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("QueryTerm")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<int>("Source")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConfirmedByUserId");
+
+                    b.HasIndex("QueryTerm");
+
+                    b.HasIndex("Status", "Source");
+
+                    b.ToTable("MedicineMappings", (string)null);
                 });
 
             modelBuilder.Entity("SMTIA.Domain.Entities.MedicineSideEffect", b =>
@@ -721,6 +876,42 @@ namespace SMTIA.Infrastructure.Migrations
                     b.ToTable("UserDiseases", (string)null);
                 });
 
+            modelBuilder.Entity("SMTIA.Domain.Entities.UserEmergencyContact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Relationship")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserEmergencyContacts");
+                });
+
             modelBuilder.Entity("SMTIA.Domain.Entities.UserPrescription", b =>
                 {
                     b.Property<Guid>("Id")
@@ -779,6 +970,80 @@ namespace SMTIA.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserPrescriptions", (string)null);
+                });
+
+            modelBuilder.Entity("SMTIA.Domain.Entities.UserSideEffect", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("MedicineId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("MedicineName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SideEffects")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSideEffects");
+                });
+
+            modelBuilder.Entity("SMTIA.Domain.Entities.UserSurgery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SurgeryName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSurgeries");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -862,6 +1127,24 @@ namespace SMTIA.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SMTIA.Domain.Entities.InteractionAnalysis", b =>
+                {
+                    b.HasOne("SMTIA.Domain.Entities.Medicine", "NewMedicine")
+                        .WithMany()
+                        .HasForeignKey("NewMedicineId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SMTIA.Domain.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NewMedicine");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SMTIA.Domain.Entities.MedicationSchedule", b =>
                 {
                     b.HasOne("SMTIA.Domain.Entities.UserPrescription", "Prescription")
@@ -879,6 +1162,16 @@ namespace SMTIA.Infrastructure.Migrations
                     b.Navigation("Prescription");
 
                     b.Navigation("PrescriptionMedicine");
+                });
+
+            modelBuilder.Entity("SMTIA.Domain.Entities.MedicineMapping", b =>
+                {
+                    b.HasOne("SMTIA.Domain.Entities.AppUser", "ConfirmedByUser")
+                        .WithMany()
+                        .HasForeignKey("ConfirmedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ConfirmedByUser");
                 });
 
             modelBuilder.Entity("SMTIA.Domain.Entities.MedicineSideEffect", b =>
@@ -952,6 +1245,17 @@ namespace SMTIA.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SMTIA.Domain.Entities.UserEmergencyContact", b =>
+                {
+                    b.HasOne("SMTIA.Domain.Entities.AppUser", "User")
+                        .WithMany("EmergencyContacts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SMTIA.Domain.Entities.UserPrescription", b =>
                 {
                     b.HasOne("SMTIA.Domain.Entities.AppUser", "User")
@@ -963,11 +1267,45 @@ namespace SMTIA.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SMTIA.Domain.Entities.UserSideEffect", b =>
+                {
+                    b.HasOne("SMTIA.Domain.Entities.Medicine", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineId");
+
+                    b.HasOne("SMTIA.Domain.Entities.AppUser", "User")
+                        .WithMany("UserSideEffects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medicine");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SMTIA.Domain.Entities.UserSurgery", b =>
+                {
+                    b.HasOne("SMTIA.Domain.Entities.AppUser", "User")
+                        .WithMany("UserSurgeries")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SMTIA.Domain.Entities.AppUser", b =>
                 {
+                    b.Navigation("EmergencyContacts");
+
                     b.Navigation("UserAllergies");
 
                     b.Navigation("UserDiseases");
+
+                    b.Navigation("UserSideEffects");
+
+                    b.Navigation("UserSurgeries");
                 });
 
             modelBuilder.Entity("SMTIA.Domain.Entities.MedicationSchedule", b =>

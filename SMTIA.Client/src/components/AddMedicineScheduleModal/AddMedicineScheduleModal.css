@@ -1,0 +1,545 @@
+.add-medicine-schedule-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.add-medicine-schedule-modal {
+  background: #ffffff;
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  outline: none;
+}
+
+
+.add-medicine-schedule-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 24px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 24px;
+}
+
+.add-medicine-schedule-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.add-medicine-schedule-back-button {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.add-medicine-schedule-back-button:hover {
+  background: #e9ecef;
+  color: #333;
+  transform: scale(1.05);
+}
+
+.add-medicine-schedule-title {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #1e1f28;
+  margin: 0;
+}
+
+.add-medicine-schedule-close {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.add-medicine-schedule-close:hover {
+  background: #e9ecef;
+  color: #333;
+  transform: scale(1.05);
+}
+
+.add-medicine-schedule-content {
+  padding: 0 24px;
+}
+
+.add-medicine-schedule-field {
+  margin-bottom: 32px;
+}
+
+.add-medicine-schedule-question {
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 16px 0;
+}
+
+.add-medicine-schedule-frequency-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.add-medicine-schedule-frequency-input {
+  width: 100%;
+  padding: 12px 100px 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 16px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  color: #333;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.add-medicine-schedule-change-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #0171e4;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.add-medicine-schedule-change-button:hover {
+  background: #0056b3;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.add-medicine-schedule-frequency-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 2px solid #e9ecef;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.add-medicine-schedule-frequency-option {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.add-medicine-schedule-frequency-option:hover {
+  background: #f8f9fa;
+}
+
+.add-medicine-schedule-frequency-option.selected {
+  background: #0171e4;
+  color: white;
+}
+
+.add-medicine-schedule-frequency-option.selected:hover {
+  background: #0056b3;
+}
+
+.add-medicine-schedule-days-container {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.add-medicine-schedule-day-button {
+  flex: 1;
+  aspect-ratio: 1;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-medicine-schedule-day-button:hover {
+  background: #e9ecef;
+  border-color: #0171e4;
+  color: #0171e4;
+}
+
+.add-medicine-schedule-day-button.selected {
+  background: #0171e4;
+  border-color: #0171e4;
+  color: white;
+  transform: scale(1.05);
+}
+
+.add-medicine-schedule-time-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.add-medicine-schedule-time-container:hover {
+  background: #f0f8ff;
+  border-color: #0171e4;
+  box-shadow: 0 2px 8px rgba(1, 113, 228, 0.1);
+}
+
+.add-medicine-schedule-time-input {
+  flex: 1.2;
+  padding: 14px 18px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  background: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.add-medicine-schedule-time-input:hover {
+  border-color: #0171e4;
+  box-shadow: 0 0 0 3px rgba(1, 113, 228, 0.1);
+}
+
+.add-medicine-schedule-time-input:focus {
+  outline: none;
+  border-color: #0171e4;
+  box-shadow: 0 0 0 3px rgba(1, 113, 228, 0.2);
+}
+
+.add-medicine-schedule-dosage-select {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-medicine-schedule-dosage-select:hover {
+  border-color: #0171e4;
+  box-shadow: 0 0 0 3px rgba(1, 113, 228, 0.1);
+}
+
+.add-medicine-schedule-dosage-select:focus {
+  outline: none;
+  border-color: #0171e4;
+  box-shadow: 0 0 0 3px rgba(1, 113, 228, 0.2);
+}
+
+.add-medicine-schedule-remove-time {
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.add-medicine-schedule-remove-time:hover {
+  background: #ff3742;
+  transform: scale(1.1);
+}
+
+.add-medicine-schedule-add-time {
+  background: transparent;
+  border: 2px dashed #0171e4;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0171e4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.add-medicine-schedule-add-time:hover {
+  background: #f0f8ff;
+  border-style: solid;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(1, 113, 228, 0.2);
+}
+
+
+.add-medicine-schedule-footer {
+  padding: 24px;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 24px;
+}
+
+.add-medicine-schedule-add-button {
+  width: 100%;
+  background:var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-medicine-schedule-add-button:hover {
+  background: #555;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.add-medicine-schedule-add-button:active {
+  transform: translateY(0);
+}
+
+.add-medicine-schedule-add-button.disabled {
+  background: #ccc;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.add-medicine-schedule-add-button.disabled:hover {
+  background: #ccc;
+  color: #999;
+  transform: none;
+  box-shadow: none;
+}
+
+
+.fade-in {
+  animation: scheduleModalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-out {
+  animation: scheduleModalFadeOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes scheduleModalFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes scheduleModalFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .add-medicine-schedule-modal-overlay {
+    padding: 16px;
+  }
+  
+  .add-medicine-schedule-modal {
+    max-width: 100%;
+  }
+  
+  .add-medicine-schedule-header {
+    padding: 20px 20px 0 20px;
+  }
+  
+  .add-medicine-schedule-content {
+    padding: 0 20px;
+  }
+  
+  .add-medicine-schedule-footer {
+    padding: 20px;
+  }
+  
+  .add-medicine-schedule-frequency-input {
+    padding: 10px 90px 10px 14px;
+    font-size: 14px;
+  }
+  
+  .add-medicine-schedule-change-button {
+    padding: 6px 10px;
+    font-size: 11px;
+    right: 6px;
+  }
+  
+  .add-medicine-schedule-header-left {
+    gap: 12px;
+  }
+  
+  .add-medicine-schedule-back-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .add-medicine-schedule-question {
+    font-size: 16px;
+  }
+  
+  .add-medicine-schedule-days-container {
+    gap: 6px;
+  }
+  
+  .add-medicine-schedule-day-button {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-medicine-schedule-modal-overlay {
+    padding: 12px;
+  }
+  
+  .add-medicine-schedule-header {
+    padding: 16px 16px 0 16px;
+  }
+  
+  .add-medicine-schedule-content {
+    padding: 0 16px;
+  }
+  
+  .add-medicine-schedule-footer {
+    padding: 16px;
+  }
+  
+  .add-medicine-schedule-header-left {
+    gap: 8px;
+  }
+  
+  .add-medicine-schedule-back-button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .add-medicine-schedule-question {
+    font-size: 14px;
+  }
+  
+  .add-medicine-schedule-frequency-input {
+    font-size: 14px;
+    padding: 10px 80px 10px 12px;
+  }
+  
+  .add-medicine-schedule-change-button {
+    padding: 5px 8px;
+    font-size: 10px;
+    right: 4px;
+  }
+  
+  .add-medicine-schedule-time-input,
+  .add-medicine-schedule-dosage-select {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+  
+  .add-medicine-schedule-time-container {
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .add-medicine-schedule-remove-time {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .add-medicine-schedule-add-time {
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+  
+  .add-medicine-schedule-days-container {
+    gap: 4px;
+  }
+  
+  .add-medicine-schedule-day-button {
+    font-size: 11px;
+  }
+  
+  .add-medicine-schedule-time-container {
+    gap: 8px;
+  }
+}

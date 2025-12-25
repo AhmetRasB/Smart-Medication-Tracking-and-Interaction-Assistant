@@ -23,34 +23,36 @@ namespace SMTIA.Application.Features.Auth.Login
 
             if (user is null)
             {
-                return (500, "Kullanıcı bulunamadı");
+                return (400, "Kullanıcı bulunamadı");
             }
 
-            SignInResult signInResult = await signInManager.CheckPasswordSignInAsync(user, request.Password, true);
+            // Enable lockout on failure (3 attempts per hour)
+            SignInResult signInResult = await signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: true);
 
             if (signInResult.IsLockedOut)
             {
                 TimeSpan? timeSpan = user.LockoutEnd - DateTime.UtcNow;
                 if (timeSpan is not null)
-                    return (500, $"Şifrenizi 3 defa yanlış girdiğiniz için kullanıcı {Math.Ceiling(timeSpan.Value.TotalMinutes)} dakika süreyle bloke edilmiştir");
+                    return (403, $"Şifrenizi 3 defa yanlış girdiğiniz için kullanıcı {Math.Ceiling(timeSpan.Value.TotalMinutes)} dakika süreyle bloke edilmiştir");
                 else
-                    return (500, "Kullanıcınız 3 kez yanlış şifre girdiği için 5 dakika süreyle bloke edilmiştir");
+                    return (403, "Kullanıcınız 3 kez yanlış şifre girdiği için 5 dakika süreyle bloke edilmiştir");
             }
 
             if (signInResult.IsNotAllowed)
             {
-                // E-posta doğrulanmamışsa, yeni bir onay e-postası gönder
+                // Email onaylanmamışsa token döndürme, uyarı ver
                 if (!user.EmailConfirmed)
                 {
                     await SendConfirmationEmailAsync(user, cancellationToken);
-                    return (500, "Mail adresiniz onaylı değil. Yeni bir onay e-postası gönderildi. Lütfen e-postanızı kontrol edin.");
+                    return (403, "E-posta adresiniz henüz onaylanmamış. E-posta adresinize yeni bir onay linki gönderildi. Lütfen e-postanızı kontrol edin.");
                 }
-                return (500, "Mail adresiniz onaylı değil");
+
+                return (400, "Giriş yapılamıyor");
             }
 
             if (!signInResult.Succeeded)
             {
-                return (500, "Şifreniz yanlış");
+                return (400, "Şifreniz yanlış");
             }
 
             var loginResponse = await jwtProvider.CreateToken(user);

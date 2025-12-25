@@ -32,7 +32,7 @@ namespace SMTIA.Infrastructure.Services
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            DateTime expires = DateTime.UtcNow.AddMonths(1);
+            DateTime expires = DateTime.UtcNow.AddHours(24); // Token 24 saat geçerli
 
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Value.SecretKey));

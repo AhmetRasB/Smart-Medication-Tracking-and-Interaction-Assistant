@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<UserSecretsId>smtia-webapi-secrets</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
