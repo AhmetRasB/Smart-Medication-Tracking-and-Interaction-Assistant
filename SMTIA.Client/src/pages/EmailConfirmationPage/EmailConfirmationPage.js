@@ -14,14 +14,21 @@ function EmailConfirmationPage() {
     const emailParam = urlParams.get('email');
     const error = urlParams.get('error');
 
-    console.log('[EmailConfirmation] URL params:', { success, token: token ? `${token.substring(0, 20)}...` : null, emailParam, error });
-
     if (success === 'true' && token) {
+      // Token'ı decode et (URL encoding'den kaynaklanan sorunları önlemek için)
+      const decodedToken = decodeURIComponent(token);
+      
+      // Token formatını kontrol et
+      const parts = decodedToken.split('.');
+      if (parts.length !== 3) {
+        setStatus('error');
+        setMessage('Geçersiz token formatı.');
+        return;
+      }
+      
       // Token'ı localStorage'a kaydet
-      console.log('[EmailConfirmation] Token kaydediliyor, uzunluk:', token.length);
-      setToken(token);
-      const user = getUserFromToken(token);
-      console.log('[EmailConfirmation] Tokendan kullanıcı bilgisi:', user);
+      setToken(decodedToken);
+      const user = getUserFromToken(decodedToken);
       setStatus('success');
       setEmail(emailParam || user?.email || '');
       setMessage('E-posta adresiniz başarıyla onaylandı. Otomatik olarak giriş yapılıyor...');

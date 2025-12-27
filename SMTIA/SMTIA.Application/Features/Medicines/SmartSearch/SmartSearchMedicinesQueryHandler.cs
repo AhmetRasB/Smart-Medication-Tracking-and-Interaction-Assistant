@@ -71,13 +71,11 @@ namespace SMTIA.Application.Features.Medicines.SmartSearch
                 })
                 .ToList();
 
-            // openFDA enrichment (opsiyonel)
             List<OpenFdaMedicineDto>? openFdaItems = null;
             int? openFdaTotal = null;
 
             if (request.IncludeOpenFda && localItems.Any())
             {
-                // İlk ilacın etken maddesini kullan (İngilizce olmalı)
                 var firstMedicine = localItems.First();
                 if (!string.IsNullOrWhiteSpace(firstMedicine.ActiveIngredient))
                 {
@@ -97,7 +95,6 @@ namespace SMTIA.Application.Features.Medicines.SmartSearch
                     }
                     catch
                     {
-                        // openFDA fail should not block local UX
                         openFdaItems = null;
                         openFdaTotal = null;
                     }

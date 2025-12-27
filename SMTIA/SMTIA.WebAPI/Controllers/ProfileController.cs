@@ -140,16 +140,19 @@ namespace SMTIA.WebAPI.Controllers
 
             for (int i = 0; i < maxRetries; i++)
             {
+                // Use a transaction to ensure atomicity
+                await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
-                    // Load user with collections
+                    // Load user - track it for updates
                     var user = await dbContext.Users
-                        .Include(u => u.EmergencyContacts)
-                        .Include(u => u.UserSurgeries)
-                        .Include(u => u.UserDiseases)
                         .FirstOrDefaultAsync(u => u.Id == userGuid, cancellationToken);
 
-                    if (user is null) return NotFound(new { message = "User not found" });
+                    if (user is null)
+                    {
+                        await transaction.RollbackAsync(cancellationToken);
+                        return NotFound(new { message = "User not found" });
+                    }
 
                     // 1. Update Scalar Fields
                     _logger.LogInformation("Step 1: Updating Scalar Fields. User ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
@@ -165,43 +168,38 @@ namespace SMTIA.WebAPI.Controllers
                     user.AcilNot = request.AcilNot;
                     user.Handedness = request.Handedness;
 
-                    _logger.LogInformation("Saving scalar updates...");
-                    await dbContext.SaveChangesAsync(cancellationToken);
-                    _logger.LogInformation("Step 1 Complete. New ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
-
-                    // RELOAD USER to ensure fresh state and stamp
-                    dbContext.ChangeTracker.Clear();
-                    user = await dbContext.Users
-                        .Include(u => u.EmergencyContacts)
-                        .Include(u => u.UserSurgeries)
-                        .Include(u => u.UserDiseases)
-                        .FirstOrDefaultAsync(u => u.Id == userGuid, cancellationToken);
+                    // 2. Handle Collections - Remove existing items directly from DbSet
+                    _logger.LogInformation("Step 2: Clearing Collections");
                     
-                    if (user == null) throw new Exception("User disappeared during update");
+                    // Remove existing emergency contacts
+                    var existingContacts = await dbContext.UserEmergencyContacts
+                        .Where(ec => ec.UserId == userGuid)
+                        .ToListAsync(cancellationToken);
+                    if (existingContacts.Any())
+                    {
+                        dbContext.UserEmergencyContacts.RemoveRange(existingContacts);
+                    }
 
-                    // 2. Clear Collections
-                    _logger.LogInformation("Step 2: Clearing Collections. User ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
-                    
-                    user.EmergencyContacts.Clear();
-                    user.UserSurgeries.Clear();
-                    user.UserDiseases.Clear();
-                    
-                    _logger.LogInformation("Saving collection clearance...");
-                    await dbContext.SaveChangesAsync(cancellationToken);
-                    _logger.LogInformation("Step 2 Complete. New ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+                    // Remove existing surgeries
+                    var existingSurgeries = await dbContext.UserSurgeries
+                        .Where(s => s.UserId == userGuid)
+                        .ToListAsync(cancellationToken);
+                    if (existingSurgeries.Any())
+                    {
+                        dbContext.UserSurgeries.RemoveRange(existingSurgeries);
+                    }
 
-                    // RELOAD USER AGAIN
-                    dbContext.ChangeTracker.Clear();
-                    user = await dbContext.Users
-                        .Include(u => u.EmergencyContacts)
-                        .Include(u => u.UserSurgeries)
-                        .Include(u => u.UserDiseases)
-                        .FirstOrDefaultAsync(u => u.Id == userGuid, cancellationToken);
-
-                    if (user == null) throw new Exception("User disappeared during update");
+                    // Remove existing diseases
+                    var existingDiseases = await dbContext.UserDiseases
+                        .Where(d => d.UserId == userGuid)
+                        .ToListAsync(cancellationToken);
+                    if (existingDiseases.Any())
+                    {
+                        dbContext.UserDiseases.RemoveRange(existingDiseases);
+                    }
 
                     // 3. Add New Items
-                    _logger.LogInformation("Step 3: Adding New Items. User ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+                    _logger.LogInformation("Step 3: Adding New Items");
                     
                     if (request.EmergencyContacts != null && request.EmergencyContacts.Any())
                     {
@@ -216,9 +214,7 @@ namespace SMTIA.WebAPI.Controllers
                                 Relationship = contact.Relationship,
                                 UserId = userGuid
                             };
-                            user.EmergencyContacts.Add(newContact);
-                            // Explicitly add to context to ensure tracking
-                            // dbContext.UserEmergencyContacts.Add(newContact); 
+                            dbContext.UserEmergencyContacts.Add(newContact);
                         }
                     }
 
@@ -227,12 +223,13 @@ namespace SMTIA.WebAPI.Controllers
                         _logger.LogInformation("Adding {Count} Surgeries...", request.Surgeries.Count);
                         foreach (var surgeryName in request.Surgeries)
                         {
-                            user.UserSurgeries.Add(new UserSurgery
+                            var newSurgery = new UserSurgery
                             {
                                 Id = Guid.NewGuid(),
                                 SurgeryName = surgeryName,
                                 UserId = userGuid
-                            });
+                            };
+                            dbContext.UserSurgeries.Add(newSurgery);
                         }
                     }
 
@@ -241,23 +238,27 @@ namespace SMTIA.WebAPI.Controllers
                         _logger.LogInformation("Adding {Count} ChronicDiseases...", request.ChronicDiseases.Count);
                         foreach (var diseaseName in request.ChronicDiseases)
                         {
-                            user.UserDiseases.Add(new UserDisease
+                            var newDisease = new UserDisease
                             {
                                 Id = Guid.NewGuid(),
                                 DiseaseName = diseaseName,
                                 UserId = userGuid
-                            });
+                            };
+                            dbContext.UserDiseases.Add(newDisease);
                         }
                     }
 
-                    _logger.LogInformation("Saving new collection items...");
+                    // Save all changes in a single transaction - this updates ConcurrencyStamp only once
+                    _logger.LogInformation("Saving all changes in single transaction...");
                     await dbContext.SaveChangesAsync(cancellationToken);
-                    _logger.LogInformation("Step 3 Complete. Final ConcurrencyStamp: {Stamp}", user.ConcurrencyStamp);
+                    await transaction.CommitAsync(cancellationToken);
                     
+                    _logger.LogInformation("UpdateHealth completed successfully");
                     return Ok(new { message = "Health info updated successfully" });
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
+                    await transaction.RollbackAsync(cancellationToken);
                     _logger.LogError("CONCURRENCY EXCEPTION CAUGHT!");
                     foreach (var entry in ex.Entries)
                     {
@@ -282,9 +283,13 @@ namespace SMTIA.WebAPI.Controllers
                     // Clear change tracker to avoid stale entries in next iteration
                     dbContext.ChangeTracker.Clear();
                     _logger.LogWarning("UpdateHealth concurrency exception, retrying... Attempt {Attempt}", i + 1);
+                    
+                    // Wait a bit before retrying to allow other operations to complete
+                    await Task.Delay(100 * (i + 1), cancellationToken);
                 }
                 catch (Exception ex)
                 {
+                    await transaction.RollbackAsync(cancellationToken);
                     _logger.LogError(ex, "Unexpected error in UpdateHealth");
                     throw;
                 }
@@ -294,22 +299,26 @@ namespace SMTIA.WebAPI.Controllers
         }
 
         public sealed record UpdateHealthRequest(
-            string? TcIdentityNo,
-            string? BloodType,
-            bool? Smokes,
-            int? CigarettesPerDay,
-            string? CigarettesUnit,
-            bool? DrinksAlcohol,
-            bool? HadCovid,
-            string? BirthCity,
-            string? AcilNot,
-            string? Handedness,
-            List<EmergencyContactDto>? EmergencyContacts,
-            List<string>? Surgeries,
-            List<string>? ChronicDiseases
+            [property: System.Text.Json.Serialization.JsonPropertyName("tcIdentityNo")] string? TcIdentityNo,
+            [property: System.Text.Json.Serialization.JsonPropertyName("bloodType")] string? BloodType,
+            [property: System.Text.Json.Serialization.JsonPropertyName("smokes")] bool? Smokes,
+            [property: System.Text.Json.Serialization.JsonPropertyName("cigarettesPerDay")] int? CigarettesPerDay,
+            [property: System.Text.Json.Serialization.JsonPropertyName("cigarettesUnit")] string? CigarettesUnit,
+            [property: System.Text.Json.Serialization.JsonPropertyName("drinksAlcohol")] bool? DrinksAlcohol,
+            [property: System.Text.Json.Serialization.JsonPropertyName("hadCovid")] bool? HadCovid,
+            [property: System.Text.Json.Serialization.JsonPropertyName("birthCity")] string? BirthCity,
+            [property: System.Text.Json.Serialization.JsonPropertyName("acilNot")] string? AcilNot,
+            [property: System.Text.Json.Serialization.JsonPropertyName("handedness")] string? Handedness,
+            [property: System.Text.Json.Serialization.JsonPropertyName("emergencyContacts")] List<EmergencyContactDto>? EmergencyContacts,
+            [property: System.Text.Json.Serialization.JsonPropertyName("surgeries")] List<string>? Surgeries,
+            [property: System.Text.Json.Serialization.JsonPropertyName("chronicDiseases")] List<string>? ChronicDiseases
         );
 
-        public sealed record EmergencyContactDto(string Name, string Phone, string? Relationship);
+        public sealed record EmergencyContactDto(
+            [property: System.Text.Json.Serialization.JsonPropertyName("name")] string Name,
+            [property: System.Text.Json.Serialization.JsonPropertyName("phone")] string Phone,
+            [property: System.Text.Json.Serialization.JsonPropertyName("relationship")] string? Relationship
+        );
         
         public sealed record UpdateProfileRequest(
             string? Name,

@@ -160,6 +160,32 @@ export const smtiaApi = {
                 method: 'PUT',
                 body: { roles }
             });
+        },
+        async getAuditLogs(params = {}) {
+            const queryParams = new URLSearchParams();
+            if (params.startDate) queryParams.append('startDate', params.startDate);
+            if (params.endDate) queryParams.append('endDate', params.endDate);
+            if (params.action) queryParams.append('action', params.action);
+            if (params.entityType) queryParams.append('entityType', params.entityType);
+            if (params.userId) queryParams.append('userId', params.userId);
+            if (params.page) queryParams.append('page', params.page);
+            if (params.pageSize) queryParams.append('pageSize', params.pageSize);
+            return apiRequest(`/api/admin/audit-logs?${queryParams.toString()}`);
+        },
+        async getSerilogLogs(lines = 1000) {
+            return apiRequest(`/api/admin/serilog-logs?lines=${lines}`);
+        },
+        async deleteUser(userId) {
+            return apiRequest(`/api/admin/users/${userId}`, { method: 'DELETE' });
+        },
+        async toggleUserLockout(userId, lockoutEnabled) {
+            return apiRequest(`/api/admin/users/${userId}/lockout`, {
+                method: 'PUT',
+                body: { lockoutEnabled }
+            });
+        },
+        async getStats() {
+            return apiRequest('/api/admin/stats');
         }
     }
 };

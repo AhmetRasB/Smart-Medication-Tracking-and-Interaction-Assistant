@@ -34,6 +34,19 @@ namespace SMTIA.Infrastructure.Services
 
             DateTime expires = DateTime.UtcNow.AddHours(24); // Token 24 saat geçerli
 
+            // Validate JWT options
+            if (string.IsNullOrWhiteSpace(jwtOptions.Value.SecretKey))
+            {
+                throw new InvalidOperationException("JWT SecretKey is not configured");
+            }
+            if (string.IsNullOrWhiteSpace(jwtOptions.Value.Issuer))
+            {
+                throw new InvalidOperationException("JWT Issuer is not configured");
+            }
+            if (string.IsNullOrWhiteSpace(jwtOptions.Value.Audience))
+            {
+                throw new InvalidOperationException("JWT Audience is not configured");
+            }
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Value.SecretKey));
 

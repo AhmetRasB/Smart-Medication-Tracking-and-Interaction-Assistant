@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SMTIA.Application.Services;
 using SMTIA.Domain.Entities;
 using SMTIA.Infrastructure.Context;
 using SMTIA.WebAPI.Abstractions;
@@ -14,11 +15,20 @@ namespace SMTIA.WebAPI.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly ApplicationDbContext _db;
+        private readonly IGemmaInteractionAnalyzer _aiService;
+        private readonly ILogger<ChatController> _logger;
 
-        public ChatController(MediatR.IMediator mediator, UserManager<AppUser> userManager, ApplicationDbContext db) : base(mediator)
+        public ChatController(
+            MediatR.IMediator mediator, 
+            UserManager<AppUser> userManager, 
+            ApplicationDbContext db,
+            IGemmaInteractionAnalyzer aiService,
+            ILogger<ChatController> logger) : base(mediator)
         {
             _userManager = userManager;
             _db = db;
+            _aiService = aiService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -27,22 +37,43 @@ namespace SMTIA.WebAPI.Controllers
             var userId = GetUserIdFromToken();
             if (userId == null) return Unauthorized();
 
-            var user = await _userManager.FindByIdAsync(userId.Value.ToString());
+            var user = await _userManager.Users
+                .Include(u => u.UserAllergies)
+                .Include(u => u.UserDiseases)
+                .Include(u => u.UserSurgeries)
+                .Include(u => u.EmergencyContacts)
+                .FirstOrDefaultAsync(u => u.Id == userId.Value, cancellationToken);
+
             if (user == null) return NotFound(new { message = "User not found" });
 
-            // Get user medicines for context
-            var medicines = await GetUserMedicinesAsync(userId.Value, cancellationToken);
+            var userMessage = (request.Message ?? "").Trim();
+            if (string.IsNullOrWhiteSpace(userMessage))
+            {
+                return BadRequest(new { message = "Message cannot be empty" });
+            }
 
-            var message = (request.Message ?? "").Trim().ToLowerInvariant();
+            try
+            {
+                // Collect all user health information
+                var userContext = await BuildUserContextAsync(user, cancellationToken);
 
-            // Enhanced responses with user context
-            var reply =
-                message.Contains("yan etki") ? "Yan etki hissediyorsan doktoruna danışmanı öneririm. İstersen aldığın ilaçları listele, risk analizi yapayım." :
-                message.Contains("doz") ? "Doz konusunda doktorun önerisini baz almalısın. İlacın adını ve dozunu yazarsan daha net yardımcı olurum." :
-                message.Contains("ilaç") ? $"İlaçlarını düzenli almak önemli. Şu anda {medicines.Count} ilaç kullanıyorsun. Takviminden bugün hangi saatlerde ilaçların var, kontrol edelim." :
-                "Anladım. Bana ilaç adı / doz / kullanım sıklığı yazarsan yardımcı olayım.";
+                // Build comprehensive prompt for AI
+                var prompt = BuildPrompt(user, userContext, userMessage);
 
-            return Ok(new { reply });
+                _logger.LogInformation("Sending chat request to AI for user {UserId}", userId.Value);
+
+                // Get AI response from Groq
+                var aiResponse = await _aiService.AnalyzeAsync(prompt, cancellationToken);
+
+                _logger.LogInformation("Received AI response for user {UserId}, length: {Length}", userId.Value, aiResponse?.Length ?? 0);
+
+                return Ok(new { reply = aiResponse?.Trim() ?? "Üzgünüm, şu anda yanıt veremiyorum. Lütfen daha sonra tekrar deneyin." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing chat request for user {UserId}", userId.Value);
+                return StatusCode(500, new { message = "AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.", error = ex.Message });
+            }
         }
 
         [HttpPost("bmi-analysis")]
@@ -214,6 +245,136 @@ namespace SMTIA.WebAPI.Controllers
             return schedules;
         }
 
+        private async Task<UserContext> BuildUserContextAsync(AppUser user, CancellationToken cancellationToken)
+        {
+            // Get medicines
+            var medicines = await GetUserMedicinesAsync(user.Id, cancellationToken);
+
+            // Get allergies
+            var allergies = user.UserAllergies
+                .Where(a => !a.IsDeleted)
+                .Select(a => new AllergyInfo(a.AllergyName, a.Severity, a.Description))
+                .ToList();
+
+            // Get diseases
+            var diseases = user.UserDiseases
+                .Where(d => !d.IsDeleted)
+                .Select(d => new DiseaseInfo(d.DiseaseName, d.Description, d.IsActive, d.DiagnosisDate))
+                .ToList();
+
+            // Get surgeries
+            var surgeries = user.UserSurgeries
+                .Where(s => !s.IsDeleted)
+                .Select(s => s.SurgeryName)
+                .ToList();
+
+            // Get side effects
+            var sideEffects = await _db.UserSideEffects
+                .AsNoTracking()
+                .Where(se => se.UserId == user.Id && !se.IsDeleted)
+                .Include(se => se.Medicine)
+                .Select(se => new SideEffectInfo(
+                    !string.IsNullOrWhiteSpace(se.MedicineName) ? se.MedicineName : (se.Medicine != null ? se.Medicine.Name : "Bilinmeyen"), 
+                    se.SideEffects, 
+                    se.Severity, 
+                    se.Date))
+                .ToListAsync(cancellationToken);
+
+            // Get today's intake logs (medicines taken today)
+            var todayStart = DateTime.UtcNow.Date;
+            var todayEnd = todayStart.AddDays(1);
+            var todayIntakes = await _db.IntakeLogs
+                .AsNoTracking()
+                .Where(il => il.UserId == user.Id && 
+                            il.ScheduledTime >= todayStart && 
+                            il.ScheduledTime < todayEnd)
+                .Join(_db.MedicationSchedules.AsNoTracking(),
+                    il => il.MedicationScheduleId,
+                    ms => ms.Id,
+                    (il, ms) => new { il, ms })
+                .Join(_db.PrescriptionMedicines.AsNoTracking().Where(pm => !pm.IsDeleted),
+                    x => x.ms.PrescriptionMedicineId,
+                    pm => pm.Id,
+                    (x, pm) => new { x.il, pm })
+                .Join(_db.Medicines.AsNoTracking().Where(m => !m.IsDeleted),
+                    x => x.pm.MedicineId,
+                    m => m.Id,
+                    (x, m) => new IntakeInfo(
+                        m.Name,
+                        x.il.ScheduledTime,
+                        x.il.IsTaken,
+                        x.il.IsSkipped,
+                        x.il.TakenTime))
+                .ToListAsync(cancellationToken);
+
+            return new UserContext
+            {
+                Medicines = medicines,
+                Allergies = allergies,
+                Diseases = diseases,
+                Surgeries = surgeries,
+                SideEffects = sideEffects,
+                TodayIntakes = todayIntakes
+            };
+        }
+
+        private string BuildPrompt(AppUser user, UserContext context, string userMessage)
+        {
+            var prompt = $@"Sen Medigo adlı bir sağlık yönetimi uygulamasının AI asistanısın. Kullanıcıya ilaçları, sağlık durumu ve tıbbi geçmişi hakkında yardımcı oluyorsun.
+
+KULLANICI BİLGİLERİ:
+- İsim: {user.FullName}
+- Yaş: {(user.DateOfBirth.HasValue ? (DateTime.UtcNow.Year - user.DateOfBirth.Value.Year) : "Bilinmiyor")}
+- Cinsiyet: {user.Gender ?? "Belirtilmemiş"}
+- Boy: {(user.HeightCm.HasValue ? $"{user.HeightCm} cm" : "Bilinmiyor")}
+- Kilo: {(user.Weight.HasValue ? $"{user.Weight} kg" : "Bilinmiyor")}
+- Kan Grubu: {user.BloodType ?? "Bilinmiyor"}
+- Doğum Yeri: {user.BirthCity ?? "Belirtilmemiş"}
+- El Tercihi: {user.Handedness ?? "Belirtilmemiş"}
+
+SAĞLIK BİLGİLERİ:
+- Sigara Kullanımı: {(user.Smokes.HasValue ? (user.Smokes.Value ? $"Evet, {user.CigarettesPerDay ?? 0} {user.CigarettesUnit ?? "adet/gün"}" : "Hayır") : "Belirtilmemiş")}
+- Alkol Kullanımı: {(user.DrinksAlcohol.HasValue ? (user.DrinksAlcohol.Value ? "Evet" : "Hayır") : "Belirtilmemiş")}
+- COVID Geçmişi: {(user.HadCovid.HasValue ? (user.HadCovid.Value ? "Evet" : "Hayır") : "Belirtilmemiş")}
+- Acil Durum Notu: {user.AcilNot ?? "Yok"}
+
+KULLANILAN İLAÇLAR:
+{(context.Medicines.Any() ? string.Join("\n", context.Medicines.Select((m, i) => $"{i + 1}. {m.Name}")) : "Henüz ilaç eklenmemiş")}
+
+ALERJİLER:
+{(context.Allergies.Any() ? string.Join("\n", context.Allergies.Select((a, i) => $"{i + 1}. {a.AllergyName} (Şiddet: {a.Severity ?? "Belirtilmemiş"}){(string.IsNullOrWhiteSpace(a.Description) ? "" : $" - {a.Description}")}")) : "Bilinen alerji yok")}
+
+KRONİK HASTALIKLAR:
+{(context.Diseases.Any() ? string.Join("\n", context.Diseases.Select((d, i) => $"{i + 1}. {d.DiseaseName}{(d.IsActive ? " (Aktif)" : " (Geçmişte)")}{(string.IsNullOrWhiteSpace(d.Description) ? "" : $" - {d.Description}")}")) : "Kronik hastalık yok")}
+
+GEÇİRİLMİŞ AMELİYATLAR:
+{(context.Surgeries.Any() ? string.Join("\n", context.Surgeries.Select((s, i) => $"{i + 1}. {s}")) : "Ameliyat geçmişi yok")}
+
+YAN ETKİLER:
+{(context.SideEffects.Any() ? string.Join("\n", context.SideEffects.Select((se, i) => $"{i + 1}. {se.MedicineName}: {se.SideEffects} (Şiddet: {se.Severity})")) : "Kayıtlı yan etki yok")}
+
+BUGÜN İÇİLEN İLAÇLAR:
+{(context.TodayIntakes.Any() ? string.Join("\n", context.TodayIntakes.Select((ti, i) => {
+    var status = ti.IsTaken ? $"✅ İçildi{(ti.TakenTime.HasValue ? $" ({ti.TakenTime.Value:HH:mm})" : "")}" : (ti.IsSkipped ? "❌ Atlanıldı" : "⏳ Henüz içilmedi");
+    return $"{i + 1}. {ti.MedicineName} - {status} (Planlanan: {ti.ScheduledTime:HH:mm})";
+})) : "Bugün henüz ilaç içilmemiş")}
+
+ÖNEMLİ KURALLAR:
+1. Tıbbi tavsiye verme, sadece bilgilendirici yanıtlar ver
+2. Acil durumlarda mutlaka doktora başvurmasını söyle
+3. İlaç dozajı değişikliği için doktora danışmasını öner
+4. Kullanıcının bilgilerini dikkate alarak kişiselleştirilmiş yanıtlar ver
+5. Türkçe yanıt ver
+6. Samimi ve yardımcı bir ton kullan
+7. İlaç etkileşimleri hakkında uyarılar yap ama kesin teşhis koyma
+
+KULLANICI SORUSU: {userMessage}
+
+Yanıtını ver:";
+
+            return prompt;
+        }
+
         private Guid? GetUserIdFromToken()
         {
             var userIdClaim = User.FindFirst("Id")?.Value;
@@ -223,11 +384,27 @@ namespace SMTIA.WebAPI.Controllers
         }
 
         public sealed record ChatRequest(string Message);
+        
         private sealed class MedicineInfo
         {
             public Guid Id { get; set; }
             public string Name { get; set; } = string.Empty;
         }
+
+        private sealed class UserContext
+        {
+            public List<MedicineInfo> Medicines { get; set; } = new();
+            public List<AllergyInfo> Allergies { get; set; } = new();
+            public List<DiseaseInfo> Diseases { get; set; } = new();
+            public List<string> Surgeries { get; set; } = new();
+            public List<SideEffectInfo> SideEffects { get; set; } = new();
+            public List<IntakeInfo> TodayIntakes { get; set; } = new();
+        }
+
+        private sealed record AllergyInfo(string AllergyName, string? Severity, string? Description);
+        private sealed record DiseaseInfo(string DiseaseName, string? Description, bool IsActive, DateTime? DiagnosisDate);
+        private sealed record SideEffectInfo(string MedicineName, string SideEffects, string Severity, DateTime Date);
+        private sealed record IntakeInfo(string MedicineName, DateTime ScheduledTime, bool IsTaken, bool IsSkipped, DateTime? TakenTime);
     }
 }
 
