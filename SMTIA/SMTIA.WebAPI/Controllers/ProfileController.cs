@@ -53,6 +53,7 @@ namespace SMTIA.WebAPI.Controllers
                 weightKg = user.Weight,
                 gender = user.Gender,
                 bloodType = user.BloodType,
+                interactionRiskPercentage = user.InteractionRiskPercentage,
                 roles = roles.ToList()
             });
         }
@@ -82,6 +83,10 @@ namespace SMTIA.WebAPI.Controllers
                 var parts = request.Name.Trim().Split(' ', 2);
                 user.FirstName = parts[0];
                 if (parts.Length > 1) user.LastName = parts[1];
+            }
+            if (request.InteractionRiskPercentage.HasValue)
+            {
+                user.InteractionRiskPercentage = request.InteractionRiskPercentage.Value;
             }
 
             var result = await _userManager.UpdateAsync(user);
@@ -325,7 +330,8 @@ namespace SMTIA.WebAPI.Controllers
             int? AgeYears,
             int? HeightCm,
             decimal? WeightKg,
-            string? Gender
+            string? Gender,
+            int? InteractionRiskPercentage
         );
     }
 }

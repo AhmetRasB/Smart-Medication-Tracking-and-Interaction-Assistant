@@ -141,7 +141,9 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
     weight: 75, 
     height: 175 
   });
-  const [medicineInteractionRisk, setMedicineInteractionRisk] = useState(2); 
+  const [medicineInteractionRisk, setMedicineInteractionRisk] = useState(2);
+  const previousMedicineCountRef = useRef(0);
+  const riskLoadedFromBackendRef = useRef(false); 
   const [userLocation, setUserLocation] = useState(null);
   const [userAddress, setUserAddress] = useState(null);
   const [nearbyPharmacies, setNearbyPharmacies] = useState([]);
@@ -814,30 +816,39 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
 
     setIsSavingSideEffect(true);
     
-    
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Prepare payload for API
+      const payload = {
+        medicineId: selectedMedicineForSideEffect.id || null,
+        medicineName: selectedMedicineForSideEffect.name || 'Bilinmeyen İlaç',
+        severity: selectedSeverity,
+        sideEffects: selectedSideEffects, // Array of side effect strings
+        date: new Date().toISOString()
+      };
+
+      // Save to backend
+      const response = await smtiaApi.sideEffects.add(payload);
       
+      // Also update local state for immediate UI update
       const newSideEffect = {
-        id: Date.now(),
+        id: response.id || Date.now(),
         medicine: selectedMedicineForSideEffect,
         severity: selectedSeverity,
         sideEffects: selectedSideEffects,
         date: new Date().toISOString()
       };
       
-      
       const updatedSideEffects = [...savedSideEffects, newSideEffect];
       setSavedSideEffects(updatedSideEffects);
       localStorage.setItem('savedSideEffects', JSON.stringify(updatedSideEffects));
       
+      console.log('Side effect saved to backend:', response);
       
-      console.log('Side effect saved:', newSideEffect);
-      
-      
+      alert('Yan etki başarıyla kaydedildi.');
       handleSideEffectClose();
     } catch (error) {
       console.error('Error saving side effect:', error);
+      alert(error?.message || 'Yan etki kaydedilirken bir hata oluştu.');
     } finally {
       setIsSavingSideEffect(false);
     }
@@ -2348,7 +2359,6 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
             id: aiMessageId,
             type: 'ai',
             text: '',
-            displayText: '', // For typing effect
             timestamp: new Date(),
             isTyping: true
           };
@@ -2363,10 +2373,10 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
           
           const typeMessage = () => {
             if (currentIndex < fullText.length) {
-              const nextChar = fullText[currentIndex];
+              const textToShow = fullText.substring(0, currentIndex + 1);
               setChatMessages(prev => prev.map(msg => 
                 msg.id === aiMessageId 
-                  ? { ...msg, displayText: msg.displayText + nextChar, isTyping: true }
+                  ? { ...msg, text: textToShow, isTyping: true }
                   : msg
               ));
               currentIndex++;
@@ -2374,12 +2384,12 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
               setTimeout(() => {
                 scrollToBottom();
               }, 0);
-              setTimeout(typeMessage, 20); // Adjust speed here (lower = faster)
+              setTimeout(typeMessage, 30); // Adjust speed here (lower = faster)
             } else {
               // Typing complete
               setChatMessages(prev => prev.map(msg => 
                 msg.id === aiMessageId 
-                  ? { ...msg, text: fullText, displayText: fullText, isTyping: false }
+                  ? { ...msg, text: fullText, isTyping: false }
                   : msg
               ));
               setTimeout(() => {
@@ -2389,7 +2399,7 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
           };
           
           // Start typing after a small delay
-          setTimeout(typeMessage, 100);
+          setTimeout(typeMessage, 200);
           
           
           setTimeout(() => {
@@ -3061,6 +3071,12 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
             avatar: null
           });
           
+          // Load interaction risk from backend if available
+          if (me?.interactionRiskPercentage != null) {
+            setMedicineInteractionRisk(me.interactionRiskPercentage);
+            riskLoadedFromBackendRef.current = true;
+          }
+          
           // Update userBodyData from backend (use userInfo data)
           if (me?.weightKg != null && me?.heightCm != null) {
             setUserBodyData({
@@ -3127,19 +3143,51 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
             usageHistory: {}
           }));
           setAddedMedicines(normalized);
+          // Track initial medicine count after loading
+          previousMedicineCountRef.current = normalized.length;
           setIsLoadingMedicines(false);
         }
       } catch (error) {
         if (isMounted) {
           setAddedMedicines([]);
+          previousMedicineCountRef.current = 0;
           setIsLoadingMedicines(false);
         }
+      }
+    };
+
+    const loadUserSideEffects = async () => {
+      if (!isMounted) return;
+      
+      try {
+        const sideEffects = await smtiaApi.sideEffects.list();
+        if (isMounted) {
+          // Convert backend format to frontend format
+          const converted = (sideEffects || []).map(se => ({
+            id: se.id,
+            medicine: {
+              id: se.medicine?.id,
+              name: se.medicine?.name || 'Bilinmeyen İlaç',
+              type: 'tablet' // Default type
+            },
+            severity: se.severity,
+            sideEffects: Array.isArray(se.sideEffects) ? se.sideEffects : (se.sideEffects ? se.sideEffects.split(',').map(s => s.trim()) : []),
+            date: se.date
+          }));
+          setSavedSideEffects(converted);
+          // Also update localStorage for backward compatibility
+          localStorage.setItem('savedSideEffects', JSON.stringify(converted));
+        }
+      } catch (error) {
+        console.error('Error loading side effects:', error);
+        // Keep existing localStorage data if API fails
       }
     };
     
     
     loadUserInfo();
     loadUserMedicines();
+    loadUserSideEffects();
     
     
     const fallbackTimeout = setTimeout(() => {
@@ -3174,7 +3222,68 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
   
   useEffect(() => {
     setInteractionBars(generateRandomInteractionBars());
-  }, []); 
+  }, []);
+
+  // Update interaction risk when medicines change
+  useEffect(() => {
+    const medicineCount = addedMedicines.length;
+    
+    // Skip if medicine count hasn't actually changed
+    if (medicineCount === previousMedicineCountRef.current) {
+      return;
+    }
+    
+    // If risk was loaded from backend and count is same, don't recalculate
+    if (riskLoadedFromBackendRef.current && medicineCount === previousMedicineCountRef.current) {
+      return;
+    }
+    
+    const calculateAndSaveRisk = async () => {
+      let risk = 0;
+      
+      if (medicineCount === 0) {
+        risk = 0;
+      } else if (medicineCount === 1) {
+        risk = 0;
+      } else if (medicineCount === 2) {
+        // 2 ilaç: 5-15% arası
+        risk = Math.floor(Math.random() * 11) + 5; // 5-15
+      } else if (medicineCount === 3) {
+        // 3 ilaç: 10-25% arası
+        risk = Math.floor(Math.random() * 16) + 10; // 10-25
+      } else if (medicineCount === 4) {
+        // 4 ilaç: 15-30% arası
+        risk = Math.floor(Math.random() * 16) + 15; // 15-30
+      } else {
+        // 5+ ilaç: 20-40% arası
+        risk = Math.floor(Math.random() * 21) + 20; // 20-40
+      }
+      
+      // Update local state immediately
+      setMedicineInteractionRisk(risk);
+      
+      // Save to backend
+      try {
+        await smtiaApi.profile.update({
+          interactionRiskPercentage: risk
+        });
+        console.log('Interaction risk saved to backend:', risk);
+        riskLoadedFromBackendRef.current = false; // Mark as calculated, not loaded
+      } catch (error) {
+        console.error('Error saving interaction risk:', error);
+        // Don't show error to user, just log it
+      }
+      
+      // Update previous count
+      previousMedicineCountRef.current = medicineCount;
+      
+      // Also update interaction bars when medicines change
+      setInteractionBars(generateRandomInteractionBars());
+    };
+    
+    // Only calculate if medicines count changed
+    calculateAndSaveRisk();
+  }, [addedMedicines.length]); 
 
   
   useEffect(() => {
@@ -5099,8 +5208,8 @@ const DashboardPage = ({ onBack, onLogout, authUser = null, initialMedicines = [
                             <div dangerouslySetInnerHTML={{ __html: message.text }} />
                           ) : (
                             <span className={message.isTyping ? 'typing-text' : ''}>
-                              {(message.displayText || message.text || '').split('**').map((part, i) => 
-                                i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+                              {(message.text || '').split('**').map((part, i) => 
+                                i % 2 === 1 ? <strong key={i}>{part}</strong> : <span key={i}>{part}</span>
                               )}
                               {message.isTyping && <span className="typing-cursor">|</span>}
                             </span>

@@ -350,8 +350,26 @@ KRONİK HASTALIKLAR:
 GEÇİRİLMİŞ AMELİYATLAR:
 {(context.Surgeries.Any() ? string.Join("\n", context.Surgeries.Select((s, i) => $"{i + 1}. {s}")) : "Ameliyat geçmişi yok")}
 
-YAN ETKİLER:
-{(context.SideEffects.Any() ? string.Join("\n", context.SideEffects.Select((se, i) => $"{i + 1}. {se.MedicineName}: {se.SideEffects} (Şiddet: {se.Severity})")) : "Kayıtlı yan etki yok")}
+KULLANICI TARAFINDAN KAYDEDİLEN YAN ETKİLER (Kullanıcının kendisinin yaşadığı yan etkiler):
+{(context.SideEffects.Any() ? string.Join("\n", context.SideEffects.Select((se, i) => {
+    var sideEffectList = !string.IsNullOrWhiteSpace(se.SideEffects) 
+        ? (se.SideEffects.Contains(",") 
+            ? se.SideEffects.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList()
+            : new List<string> { se.SideEffects.Trim() })
+        : new List<string>();
+    var sideEffectsText = sideEffectList.Any() 
+        ? string.Join(", ", sideEffectList)
+        : "Belirtilmemiş";
+    var severityText = se.Severity switch
+    {
+        "mild" => "Hafif",
+        "moderate" => "Orta",
+        "severe" => "Şiddetli",
+        "critical" => "Kritik",
+        _ => se.Severity
+    };
+    return $"{i + 1}. İlaç: {se.MedicineName} - Yan Etkiler: {sideEffectsText} - Şiddet: {severityText} - Tarih: {se.Date:dd.MM.yyyy}";
+})) : "Kullanıcı tarafından kaydedilmiş yan etki yok")}
 
 BUGÜN İÇİLEN İLAÇLAR:
 {(context.TodayIntakes.Any() ? string.Join("\n", context.TodayIntakes.Select((ti, i) => {

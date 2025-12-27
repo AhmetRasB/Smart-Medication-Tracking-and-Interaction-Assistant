@@ -24,6 +24,7 @@ namespace SMTIA.Domain.Entities
         public string? BirthCity { get; set; }
         public string? AcilNot { get; set; }
         public string? Handedness { get; set; } // Right/Left
+        public int? InteractionRiskPercentage { get; set; } // İlaç etkileşim riski yüzdesi (0-100)
 
         // Navigation properties
         public ICollection<UserAllergy> UserAllergies { get; set; } = new List<UserAllergy>();
